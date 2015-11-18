@@ -1,0 +1,11 @@
+# ignore json files
+.json
+
+# ignore the repository that was cloned
+/lucene-solr
+
+# ignore issue_LUCENE folder
+/issue_LUCENE
+
+# ignore auto-saves
+*~
