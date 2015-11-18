@@ -3,10 +3,8 @@ from json import JSONDecoder
 from os import listdir, path
 from time import strptime, mktime
 
-if not path.isdir("/lucene-solr"):
-    print('yay')
-else:
-    sh.git.clone("https://github.com/apache/lucene-solr.git")
+if not path.isdir("lucene-solr"):
+	sh.git.clone("https://github.com/apache/lucene-solr.git")
 
 git = sh.git.bake(_cwd='lucene-solr')
 
