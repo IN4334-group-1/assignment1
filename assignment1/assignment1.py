@@ -17,7 +17,7 @@ def getAuthorsForFile(git, filePath):
     git: an sh.git instance
     filePath: a filepath relative to the base directory of the git repo"""
     
-    commits = git.log("--no-merges", "--pretty=%an", "build.xml").split("\n")
+    commits = git.log("--no-merges", "--pretty=%an", filePath).split("\n")
     contributors = dict()
     for author in commits[0:len(commits)-1]:
         if author in contributors.keys():
@@ -26,6 +26,25 @@ def getAuthorsForFile(git, filePath):
             contributors[author] = 1
     return (contributors, len(commits)-1)
 
+def computeStatsOnFile(contribTuple):
+    "Computes the following tuple: (#minor, #major, #total, %ownership)"
+    (contrib, total) = contribTuple
+    maxPercentage = 0.0
+    minors = 0
+    majors = 0
+    for author, commits in contrib.items():
+        currentPercentage = commits/total
+        print(commits, total, currentPercentage)
+        if currentPercentage > maxPercentage:
+            maxPercentage = currentPercentage
+        if currentPercentage < 0.05:
+            minors += 1
+        else:
+            majors += 1
+    
+    return (minors, majors, len(contrib.keys()), maxPercentage*100)
+    
+    
 ########################################################################################################
 
 if not path.isdir("lucene-solr"):
@@ -34,6 +53,8 @@ if not path.isdir("lucene-solr"):
 git = sh.git.bake("--no-pager", _cwd='lucene-solr')
 
 print(getAuthorsForFile(git, "build.xml"))
+
+print(computeStatsOnFile(getAuthorsForFile(git, "build.xml")))
 
 exit(0)
 
