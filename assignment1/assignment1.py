@@ -1,11 +1,14 @@
 import sh
 from json import JSONDecoder
-from os import listdir
+from os import listdir, path
 from time import strptime, mktime
-# sh.git.clone("https://github.com/apache/lucene-solr.git")
 
-#git = sh.git.bake(_cwd='lucene-solr')
-#git.status()
+if not path.isdir("/lucene-solr"):
+    print('yay')
+else:
+    sh.git.clone("https://github.com/apache/lucene-solr.git")
+
+git = sh.git.bake(_cwd='lucene-solr')
 
 ### read a json file
 
