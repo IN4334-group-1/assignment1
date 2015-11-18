@@ -3,12 +3,23 @@ from json import JSONDecoder
 from os import listdir, path
 from time import strptime, mktime
 
+def isClosedResolved(issue):
+    return issue['fields']['status']['name'] == "Closed" and issue['fields']['resolution']['name'] == "Fixed"
+
+def isCorrectTimePeriod(issue):
+    t = mktime(strptime(issue['fields']['resolutiondate'], TIMEFORMAT))
+    return t >= START and t < END
+
+########################################################################################################
+
 if not path.isdir("lucene-solr"):
 	sh.git.clone("https://github.com/apache/lucene-solr.git")
 
 git = sh.git.bake(_cwd='lucene-solr')
 
-### read a json file
+print(git.log("-n 10", "--pretty=%H,%s"))
+
+exit(0)
 
 # load all files
 decoder = JSONDecoder()
@@ -19,13 +30,6 @@ END = mktime(strptime("2015-07-01T00:00:00.000+0000", TIMEFORMAT))
 
 issues = []
 
-def isClosedResolved(issue):
-    return issue['fields']['status']['name'] == "Closed" and issue['fields']['resolution']['name'] == "Fixed"
-
-def isCorrectTimePeriod(issue):
-    t = mktime(strptime(issue['fields']['resolutiondate'], TIMEFORMAT))
-    return t >= START and t < END
-
 for f in listdir(PATH):
     jsonF = open(PATH + "/" + f)
     issue = decoder.decode(jsonF.read())
@@ -34,4 +38,13 @@ for f in listdir(PATH):
 
 print(issues)
 print(len(issues))
+
+
+
+
+
+
+
+
+
 
