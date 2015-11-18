@@ -11,6 +11,21 @@ def isCorrectTimePeriod(issue):
     t = mktime(strptime(issue['fields']['resolutiondate'], TIMEFORMAT))
     return t >= START and t < END
 
+def getAuthorsForFile(git, filePath):
+    """Returns a dictionary with the authors as keys and the number of commits
+    per author as values
+    git: an sh.git instance
+    filePath: a filepath relative to the base directory of the git repo"""
+    
+    commits = git.log("--no-merges", "--pretty=%an", "build.xml").split("\n")
+    contributors = dict()
+    for author in commits[0:len(commits)-1]:
+        if author in contributors.keys():
+            contributors[author] += 1
+        else:
+            contributors[author] = 1
+    return (contributors, len(commits)-1)
+
 ########################################################################################################
 
 if not path.isdir("lucene-solr"):
@@ -18,13 +33,7 @@ if not path.isdir("lucene-solr"):
 
 git = sh.git.bake("--no-pager", _cwd='lucene-solr')
 
-#print(git.log("-n 10", "--pretty=%H,%s"))
-
-#print(git.shortlog("build.xml"))
-
-
-p = Popen("cd lucene-solr && git --no-pager shortlog build.xml", shell=True, stdout=PIPE)
-print(p.communicate())
+print(getAuthorsForFile(git, "build.xml"))
 
 exit(0)
 
