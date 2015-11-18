@@ -2,6 +2,7 @@ import sh
 from json import JSONDecoder
 from os import listdir, path
 from time import strptime, mktime
+from subprocess import Popen, PIPE
 
 def isClosedResolved(issue):
     return issue['fields']['status']['name'] == "Closed" and issue['fields']['resolution']['name'] == "Fixed"
@@ -15,9 +16,15 @@ def isCorrectTimePeriod(issue):
 if not path.isdir("lucene-solr"):
 	sh.git.clone("https://github.com/apache/lucene-solr.git")
 
-git = sh.git.bake(_cwd='lucene-solr')
+git = sh.git.bake("--no-pager", _cwd='lucene-solr')
 
-print(git.log("-n 10", "--pretty=%H,%s"))
+#print(git.log("-n 10", "--pretty=%H,%s"))
+
+#print(git.shortlog("build.xml"))
+
+
+p = Popen("cd lucene-solr && git --no-pager shortlog build.xml", shell=True, stdout=PIPE)
+print(p.communicate())
 
 exit(0)
 
@@ -38,13 +45,3 @@ for f in listdir(PATH):
 
 print(issues)
 print(len(issues))
-
-
-
-
-
-
-
-
-
-
