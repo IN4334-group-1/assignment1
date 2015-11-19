@@ -43,7 +43,18 @@ def computeStatsOnFile(contribTuple):
             majors += 1
     
     return (minors, majors, len(contrib.keys()), maxPercentage*100)
+
+def linkBugFixNrToCommit(git, bugFixNr):
+    """Given a bugfix nr (in the format: LUCENE-#NR#), this function returns the
+    commit hash of this bugfix"""
+    commits = git.log("--no-merges", "--pretty=%s,%H").split("\n")
+    bugfixCommits = []
+    for commit in commits:
+        if commit.find(bugFixNr) != -1:
+            commitTuple = commit.strip(",").split(",")
+            bugfixCommits.append(commitTuple)
     
+    return bugfixCommits
     
 ########################################################################################################
 
@@ -55,8 +66,6 @@ git = sh.git.bake("--no-pager", _cwd='lucene-solr')
 print(getAuthorsForFile(git, "build.xml"))
 
 print(computeStatsOnFile(getAuthorsForFile(git, "build.xml")))
-
-exit(0)
 
 # load all files
 decoder = JSONDecoder()
@@ -75,3 +84,5 @@ for f in listdir(PATH):
 
 print(issues)
 print(len(issues))
+
+print(linkBugFixNrToCommit(git, issues[0]))
