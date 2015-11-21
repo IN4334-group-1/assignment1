@@ -64,15 +64,15 @@ def linkCommitToFiles(commitHash):
     filtered = [ f for f in changedFiles if f.endswith('.java') ]
     return filtered
 
-def addTupleToTable(filename, metrics, table):
+def addTupleToTable(filename, metrics, table, nrOfBugs):
     """Adds the given tuple to the table, based on the filename. If the 
     filename was already present, the amount of bugs is increased by 1"""
     BUG_INDEX = 1;
     #table is: [filename] = [(metrics), # bugs]
     if filename in table:
-        table[filename][BUG_INDEX] += 1
+        table[filename][BUG_INDEX] += nrOfBugs
     else:
-        table[filename] = [metrics, 1]
+        table[filename] = [metrics, nrOfBugs]
 
     return table #idk of dit moet of dat het bij reference is ;p
 
@@ -119,6 +119,9 @@ def writeResultsToFile(results):
         line.extend(list(metrics[0]))
         line.append(metrics[1])
         listWriter.writerow(line)
+
+def isBugFixCommit(commitMsg):
+    return commitMsg.find("LUCENE-") != -1
         
 
 ########################################################################################################
@@ -172,7 +175,18 @@ for issue in issues:
             contribTuple = getAuthorsForFile(commits)
             fileStats = computeStatsOnFile(contribTuple)
             fileName = javaFile + "_" + commitHash
-            results = addTupleToTable(fileName, fileStats, results)
+            results = addTupleToTable(fileName, fileStats, results, 1)
+
+allCommitsInPeriod = git.log("--no-merges", "--pretty=%s,%H", '--since={2015-01-01}', '--until={2015-07-01}').strip("\n").split("\n")
+for commit in allCommitsInPeriod:
+    (msg,commitHash) = commit.split(",")
+    if not isBugFixCommit(msg):
+         for javaFile in linkCommitToFiles(commitHash):
+            commits = getListOfCommitsUptoCommit(git, commitHash, javaFile)
+            contribTuple = getAuthorsForFile(commits)
+            fileStats = computeStatsOnFile(contribTuple)
+            fileName = javaFile + "_" + commitHash
+            results = addTupleToTable(fileName, fileStats, results, 0)
 
 
 writeResultsToFile(results)
