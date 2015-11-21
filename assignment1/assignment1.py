@@ -49,10 +49,10 @@ def computeStatsOnFile(contribTuple):
 def linkBugFixNrToCommit(git, bugFixNr):
     """Given a bugfix nr (in the format: LUCENE-#NR#), this function returns the
     commit hash of this bugfix"""
-    commits = git.log("--no-merges", "--pretty=%s,%H", "--grep", bugFixNr + ":").strip("\n").split("\n")
+    commits = git.log("--no-merges", "--pretty=%s:::%H", "--grep", bugFixNr + ":").strip("\n").split("\n")
     bugfixCommits = []
     for commit in commits:
-        bugfixCommits.append(commit.split(",")[1])
+        bugfixCommits.append(commit.split(":::")[1])
     return bugfixCommits
 
 def linkCommitToFiles(commitHash):
@@ -97,16 +97,19 @@ def getListOfCommitsUptoCommit(git, commitHash, filePath):
     commitRange = addedCommitHash + "..." + commitHash
     commitList = git.rl("--pretty=%an", "--reverse", commitRange, 
             "--boundary", "--", filePath).split("\ncommit ")
-
+    
     # unfortunately, this beast is pretty necessary
     # it does 3 things:
     # 1.    it checks if the commit is a 'boundary commit': if yes, it is only accepted
     #       if it is the 'addedCommitHash'
     # 2.    it removes the last commit, as this is the commit that is not wanted
     # 3.    it splits each hash\nauthorname in hash and authorname and selects the author
-    commits = [item.strip("\n").split("\n")[1] for item in commitList 
+    if len(commitList) > 0 and commitList[0] != "":
+       commits = [item.strip("\n").split("\n")[1] for item in commitList 
         if ((item.find("-") == -1 or item.find(addedCommitHash) != -1) 
             and item.find(commitHash) == -1)]
+    else:
+        commits = git.log("--pretty=%an", "-n", 1, commitHash, "--", filePath)
     return commits
 
 def writeResultsToFile(results):
@@ -121,7 +124,7 @@ def writeResultsToFile(results):
         listWriter.writerow(line)
 
 def isBugFixCommit(commitMsg):
-    return commitMsg.find("LUCENE-") != -1
+    return commitMsg.find("LUCENE-") != -1 or commitMsg.find("LUCENE_") != -1
         
 
 ########################################################################################################
@@ -177,11 +180,12 @@ for issue in issues:
             fileName = javaFile + "_" + commitHash
             results = addTupleToTable(fileName, fileStats, results, 1)
 
-allCommitsInPeriod = git.log("--no-merges", "--pretty=%s,%H", '--since={2015-01-01}', '--until={2015-07-01}').strip("\n").split("\n")
+allCommitsInPeriod = git.log("--no-merges", "--pretty=%s:::%H", '--since={2015-01-01}', '--until={2015-07-01}').strip("\n").split("\n")
 for commit in allCommitsInPeriod:
-    (msg,commitHash) = commit.split(",")
+    print(commit)
+    (msg,commitHash) = commit.split(":::")
     if not isBugFixCommit(msg):
-         for javaFile in linkCommitToFiles(commitHash):
+        for javaFile in linkCommitToFiles(commitHash):
             commits = getListOfCommitsUptoCommit(git, commitHash, javaFile)
             contribTuple = getAuthorsForFile(commits)
             fileStats = computeStatsOnFile(contribTuple)
