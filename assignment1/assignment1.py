@@ -18,20 +18,17 @@ def isCorrectTimePeriod(issue):
     t = mktime(strptime(issue['fields']['resolutiondate'], TIMEFORMAT))
     return t >= START and t < END
 
-def getAuthorsForFile(git, filePath):
+def getAuthorsForFile(authors):
     """Returns a dictionary with the authors as keys and the number of commits
     per author as values
-    git: an sh.git instance
-    filePath: a filepath relative to the base directory of the git repo"""
-    
-    commits = git.log("--no-merges", "--pretty=%an", filePath).split("\n")
+    authors: a list of authors"""
     contributors = dict()
-    for author in commits[0:len(commits)-1]:
+    for author in authors:
         if author in contributors.keys():
             contributors[author] += 1
         else:
             contributors[author] = 1
-    return (contributors, len(commits)-1)
+    return (contributors, len(authors))
 
 def computeStatsOnFile(contribTuple):
     "Computes the following tuple: (#minor, #major, #total, %ownership)"
@@ -54,11 +51,14 @@ def computeStatsOnFile(contribTuple):
 def linkBugFixNrToCommit(git, bugFixNr):
     """Given a bugfix nr (in the format: LUCENE-#NR#), this function returns the
     commit hash of this bugfix"""
-    commits = git.log("--no-merges", "--pretty=%s,%h").split("\n")
+    #
+    # TODO: AANPASSEN NAAR git.log --grep=bugfixNr + ":"
+    #
+    commits = git.log("--no-merges", "--pretty=%s,%H").split("\n")
     bugfixCommits = []
     for commit in commits:
         if commit.find(bugFixNr) != -1:
-            commitTuple = commit.strip(",").split(",")
+            commitTuple = tuple(commit.strip(",").split(","))
             bugfixCommits.append(commitTuple)
     
     return bugfixCommits
@@ -94,7 +94,29 @@ def addTupleToTable(filename, tuple, table):
     #then get the latest commit and loop through all the files that are currently available
     #for each file, check if it exists in the table: if not, add it with 0 bugs?
         #however, we use file versions, so use git hist and add every version of that file to the table?
+
+def getListOfCommitsUptoCommit(git, commitHash, filePath): 
+    """Given a git repository, a commithash and a filePath, this function returns a list 
+    of commits upto (but excluding) this commit for this file"""
+    # get commit hash in which this file was added
+    addedCommitHash = git.log("--pretty=%H", "--diff-filter", "A", "--", filePath).split("\n")[0]
     
+    # get a list of commits
+    commitRange = addedCommitHash + "..." + commitHash
+    commitList = git.rl("--pretty=%an", "--reverse", commitRange, 
+            "--boundary", filePath).split("\ncommit ")
+
+    # unfortunately, this beast is pretty necessary
+    # it does 3 things:
+    # 1.    it checks if the commit is a 'boundary commit': if yes, it is only accepted
+    #       if it is the 'addedCommitHash'
+    # 2.    it removes the last commit, as this is the commit that is not wanted
+    # 3.    it splits each hash\nauthorname in hash and authorname and selects the author
+    commits = [item.strip("\n").split("\n")[1] for item in commitList 
+        if ((item.find("-") == -1 or item.find(addedCommitHash) != -1) 
+            and item.find(commitHash) == -1)]
+    return commits
+
 ########################################################################################################
 
 if not path.isdir("lucene-solr"):
@@ -102,8 +124,8 @@ if not path.isdir("lucene-solr"):
 
 git = sh.git.bake("--no-pager", _cwd='lucene-solr')
 
-#print(getAuthorsForFile(git, "build.xml"))
-#print(computeStatsOnFile(getAuthorsForFile(git, "build.xml")))
+# you cannot call git.rev-list, so add an alias: now we can call git.rl, which translates to git rev-list
+git.config("alias.rl", "rev-list")
 
 # load all files
 decoder = JSONDecoder()
