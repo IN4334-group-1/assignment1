@@ -4,6 +4,13 @@ from os import listdir, path
 from time import strptime, mktime
 from subprocess import Popen, PIPE
 
+
+#TODO
+#Save all filenames + versions in table
+#Find commit(s) belonging to certain bugfix
+#Save minor, major, total, ownership, (1 bug) in table for specific file
+#Write down what choices we made and how we did everything :D
+
 def isClosedResolved(issue):
     return issue['fields']['status']['name'] == "Closed" and issue['fields']['resolution']['name'] == "Fixed"
 
