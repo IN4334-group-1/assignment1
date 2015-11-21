@@ -66,6 +66,20 @@ def linkBugFixNrToCommit(git, bugFixNr):
 def linkCommitToFiles(hash):
     changedFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', hash)
     return changedFiles.split("\n")
+
+def createTableFromTuples(tuple):
+    #TODO:
+    #tupleValues = (minor, major, total, percentage, bugs)
+    #fileName = file + hash
+    #table = {'FileName':'TupleValues'}
+    #return table
+
+def addBuglessFilesToTable(table):
+    #TODO:
+    #first create table with the files containing 1 or more bugs
+    #then get the latest commit and loop through all the files that are currently available
+    #for each file, check if it exists in the table: if not, add it with 0 bugs?
+        #however, we use file versions, so use git hist and add every version of that file to the table?
     
 ########################################################################################################
 
