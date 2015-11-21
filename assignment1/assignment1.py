@@ -2,8 +2,7 @@ import sh
 from json import JSONDecoder
 from os import listdir, path
 from time import strptime, mktime
-from subprocess import Popen, PIPE
-
+import csv
 
 #TODO
 #Save all filenames + versions in table
@@ -38,7 +37,6 @@ def computeStatsOnFile(contribTuple):
     majors = 0
     for author, commits in contrib.items():
         currentPercentage = commits/total
-        print(commits, total, currentPercentage)
         if currentPercentage > maxPercentage:
             maxPercentage = currentPercentage
         if currentPercentage < 0.05:
@@ -54,7 +52,7 @@ def linkBugFixNrToCommit(git, bugFixNr):
     commits = git.log("--no-merges", "--pretty=%s,%H", "--grep", bugFixNr + ":").strip("\n").split("\n")
     bugfixCommits = []
     for commit in commits:
-        bugfixCommits.append(tuple(commit.split(",")))  
+        bugfixCommits.append(commit.split(",")[1])
     return bugfixCommits
 
 def linkCommitToFiles(commitHash):
@@ -98,7 +96,7 @@ def getListOfCommitsUptoCommit(git, commitHash, filePath):
     # get a list of commits
     commitRange = addedCommitHash + "..." + commitHash
     commitList = git.rl("--pretty=%an", "--reverse", commitRange, 
-            "--boundary", filePath).split("\ncommit ")
+            "--boundary", "--", filePath).split("\ncommit ")
 
     # unfortunately, this beast is pretty necessary
     # it does 3 things:
@@ -110,6 +108,18 @@ def getListOfCommitsUptoCommit(git, commitHash, filePath):
         if ((item.find("-") == -1 or item.find(addedCommitHash) != -1) 
             and item.find(commitHash) == -1)]
     return commits
+
+def writeResultsToFile(results):
+    """Writes the results to a .csv file, as follows:
+    filename, minor, major, total, ownership, num_of_bugs"""
+    listWriter = csv.writer(open('result.csv', 'w+'), 
+                            delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    for fileName, metrics in results.items():
+        line = [fileName]
+        line.extend(list(metrics[0]))
+        line.append(metrics[1])
+        listWriter.writerow(line)
+        
 
 ########################################################################################################
 
@@ -137,15 +147,36 @@ for f in ['12412224.json']:#listdir(PATH):
         issues.append(issue['key'])
         #break; #TODO: remove this
 
-print(issues)
-print(len(issues))
 
-a = linkBugFixNrToCommit(git, issues[0])
+#print(issues)
+#print(len(issues))
 
-print(a)
-linkCommitToFiles('b3a74d7')
+#a = linkBugFixNrToCommit(git, issues[0])
 
-testFileName = 'java_b3a74d7'
-testTuple = (1,2,3,0.55)
-testTable = {testFileName: [testTuple, 2]}
-print(addTupleToTable(testFileName, testTuple, testTable))
+#print(a)
+#linkCommitToFiles('b3a74d7')
+
+#testFileName = 'java_b3a74d7'
+#testTuple = (1,2,3,0.55)
+#testTable = {testFileName: [testTuple, 2]}
+#print(addTupleToTable(testFileName, testTuple, testTable))
+
+results = {}
+
+
+for issue in issues:
+    commitHashes = linkBugFixNrToCommit(git, issue)
+    for commitHash in commitHashes:
+        for javaFile in linkCommitToFiles(commitHash):
+            commits = getListOfCommitsUptoCommit(git, commitHash, javaFile)
+            contribTuple = getAuthorsForFile(commits)
+            fileStats = computeStatsOnFile(contribTuple)
+            fileName = javaFile + "_" + commitHash
+            results = addTupleToTable(fileName, fileStats, results)
+
+
+writeResultsToFile(results)
+    
+    
+
+
