@@ -50,9 +50,11 @@ def linkBugFixNrToCommit(git, bugFixNr):
     """Given a bugfix nr (in the format: LUCENE-#NR#), this function returns the
     commit hash of this bugfix"""
     commits = git.log("--no-merges", "--pretty=%s:::%H", "--grep", bugFixNr + ":").strip("\n").split("\n")
+    #print("--no-merges", "--pretty=%s:::%H", "--grep", bugFixNr + ":")
     bugfixCommits = []
-    for commit in commits:
-        bugfixCommits.append(commit.split(":::")[1])
+    if len(commits) > 0 and commits[0] != "":
+        for commit in commits:
+            bugfixCommits.append(commit.split(":::")[1])
     return bugfixCommits
 
 def linkCommitToFiles(commitHash):
@@ -146,7 +148,7 @@ END = mktime(strptime("2015-07-01T00:00:00.000+0000", TIMEFORMAT))
 
 issues = []
 
-for f in ['12412224.json']:#listdir(PATH):
+for f in listdir(PATH):
     jsonF = open(PATH + "/" + f)
     issue = decoder.decode(jsonF.read())
     if isClosedResolved(issue) and isCorrectTimePeriod(issue):
