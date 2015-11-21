@@ -54,7 +54,7 @@ def computeStatsOnFile(contribTuple):
 def linkBugFixNrToCommit(git, bugFixNr):
     """Given a bugfix nr (in the format: LUCENE-#NR#), this function returns the
     commit hash of this bugfix"""
-    commits = git.log("--no-merges", "--pretty=%s,%H").split("\n")
+    commits = git.log("--no-merges", "--pretty=%s,%h").split("\n")
     bugfixCommits = []
     for commit in commits:
         if commit.find(bugFixNr) != -1:
@@ -62,6 +62,10 @@ def linkBugFixNrToCommit(git, bugFixNr):
             bugfixCommits.append(commitTuple)
     
     return bugfixCommits
+
+def linkCommitToFiles(hash):
+    changedFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', hash)
+    return changedFiles.split("\n")
     
 ########################################################################################################
 
@@ -70,9 +74,8 @@ if not path.isdir("lucene-solr"):
 
 git = sh.git.bake("--no-pager", _cwd='lucene-solr')
 
-print(getAuthorsForFile(git, "build.xml"))
-
-print(computeStatsOnFile(getAuthorsForFile(git, "build.xml")))
+#print(getAuthorsForFile(git, "build.xml"))
+#print(computeStatsOnFile(getAuthorsForFile(git, "build.xml")))
 
 # load all files
 decoder = JSONDecoder()
@@ -83,13 +86,19 @@ END = mktime(strptime("2015-07-01T00:00:00.000+0000", TIMEFORMAT))
 
 issues = []
 
-for f in listdir(PATH):
+for f in ['12412224.json']:#listdir(PATH):
     jsonF = open(PATH + "/" + f)
     issue = decoder.decode(jsonF.read())
     if isClosedResolved(issue) and isCorrectTimePeriod(issue):
         issues.append(issue['key'])
+        #break; #TODO: remove this
 
 print(issues)
 print(len(issues))
 
-print(linkBugFixNrToCommit(git, issues[0]))
+a = linkBugFixNrToCommit(git, issues[0])
+
+print(a)
+linkCommitToFiles('b3a74d7')
+
+#b3a74d74d26640cf10da19b924860a932f99fa4a
