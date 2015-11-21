@@ -77,7 +77,6 @@ def addTupleToTable(filename, tuple, table):
     filename was already present, the amount of bugs is increased by 1"""
     BUG_INDEX = 1;
     #table is: [filename] = [(tuple), # bugs]
-
     if filename in table:
         table[filename][BUG_INDEX] += 1
     else:
@@ -87,10 +86,11 @@ def addTupleToTable(filename, tuple, table):
 
 #def addBuglessFilesToTable(table):
     #checkout latest commit that we consider
+    #get all files available
+    #get different versions of the file
 
     #loop through all files in the repo (in specific folders, only ending in .java)
     #TODO:
-    #first create table with the files containing 1 or more bugs
     #then get the latest commit and loop through all the files that are currently available
     #for each file, check if it exists in the table: if not, add it with 0 bugs?
         #however, we use file versions, so use git hist and add every version of that file to the table?
@@ -133,5 +133,3 @@ testFileName = 'java_b3a74d7'
 testTuple = (1,2,3,0.55)
 testTable = {testFileName: [testTuple, 2]}
 print(addTupleToTable(testFileName, testTuple, testTable))
-
-#b3a74d74d26640cf10da19b924860a932f99fa4a
