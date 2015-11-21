@@ -64,23 +64,31 @@ def linkBugFixNrToCommit(git, bugFixNr):
     return bugfixCommits
 
 def linkCommitToFiles(hash):
+    """Given a commit hash (small version), this functions finds the files that
+    were changed in that specific commit"""
     changedFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', hash)
     changedFiles = changedFiles.split("\n")
     #Remove all files that do not end in .java
     filtered = [ f for f in changedFiles if f.endswith('.java') ]
     return filtered
 
-#def createTableFromTuples(tuple):
-    #TODO:
-    #tupleValues = (minor, major, total, percentage, bugs)
-    #fileName = file + hash
-    #table = {'FileName':'TupleValues'}
-    #return table
+def addTupleToTable(filename, tuple, table):
+    """Adds the given tuple to the table, based on the filename. If the 
+    filename was already present, the amount of bugs is increased by 1"""
+    BUG_INDEX = 1;
+    #table is: [filename] = [(tuple), # bugs]
+
+    if filename in table:
+        table[filename][BUG_INDEX] += 1
+    else:
+        table[filename] = [tuple, 1]
+
+    return table #idk of dit moet of dat het bij reference is ;p
 
 #def addBuglessFilesToTable(table):
     #checkout latest commit that we consider
 
-    #loop through all files in the repo (in )
+    #loop through all files in the repo (in specific folders, only ending in .java)
     #TODO:
     #first create table with the files containing 1 or more bugs
     #then get the latest commit and loop through all the files that are currently available
@@ -120,5 +128,6 @@ a = linkBugFixNrToCommit(git, issues[0])
 
 print(a)
 linkCommitToFiles('b3a74d7')
+addTupleToTable(1, 1, 1)
 
 #b3a74d74d26640cf10da19b924860a932f99fa4a
