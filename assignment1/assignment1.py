@@ -128,6 +128,10 @@ a = linkBugFixNrToCommit(git, issues[0])
 
 print(a)
 linkCommitToFiles('b3a74d7')
-addTupleToTable(1, 1, 1)
+
+testFileName = 'java_b3a74d7'
+testTuple = (1,2,3,0.55)
+testTable = {testFileName: [testTuple, 2]}
+print(addTupleToTable(testFileName, testTuple, testTable))
 
 #b3a74d74d26640cf10da19b924860a932f99fa4a
