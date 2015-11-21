@@ -51,16 +51,10 @@ def computeStatsOnFile(contribTuple):
 def linkBugFixNrToCommit(git, bugFixNr):
     """Given a bugfix nr (in the format: LUCENE-#NR#), this function returns the
     commit hash of this bugfix"""
-    #
-    # TODO: AANPASSEN NAAR git.log --grep=bugfixNr + ":"
-    #
-    commits = git.log("--no-merges", "--pretty=%s,%H").split("\n")
+    commits = git.log("--no-merges", "--pretty=%s,%H", "--grep", bugFixNr + ":").strip("\n").split("\n")
     bugfixCommits = []
     for commit in commits:
-        if commit.find(bugFixNr) != -1:
-            commitTuple = tuple(commit.strip(",").split(","))
-            bugfixCommits.append(commitTuple)
-    
+        bugfixCommits.append(tuple(commit.split(",")))  
     return bugfixCommits
 
 def linkCommitToFiles(commitHash):
