@@ -173,9 +173,13 @@ results = {}
 
 
 for issue in issues:
+    print(issue)
     commitHashes = linkBugFixNrToCommit(git, issue)
+    print("hashes: " + str(len(commitHashes)))
     for commitHash in commitHashes:
-        for javaFile in linkCommitToFiles(commitHash):
+        javaFiles = linkCommitToFiles(commitHash)
+        print("files: " + str(len(javaFiles)))
+        for javaFile in javaFiles:
             commits = getListOfCommitsUptoCommit(git, commitHash, javaFile)
             contribTuple = getAuthorsForFile(commits)
             fileStats = computeStatsOnFile(contribTuple)
