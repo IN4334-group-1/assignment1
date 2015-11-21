@@ -63,24 +63,24 @@ def linkBugFixNrToCommit(git, bugFixNr):
     
     return bugfixCommits
 
-def linkCommitToFiles(hash):
+def linkCommitToFiles(commitHash):
     """Given a commit hash (small version), this functions finds the files that
     were changed in that specific commit"""
-    changedFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', hash)
+    changedFiles = git('diff-tree', '--no-commit-id', '--name-only', '-r', commitHash)
     changedFiles = changedFiles.split("\n")
     #Remove all files that do not end in .java
     filtered = [ f for f in changedFiles if f.endswith('.java') ]
     return filtered
 
-def addTupleToTable(filename, tuple, table):
+def addTupleToTable(filename, metrics, table):
     """Adds the given tuple to the table, based on the filename. If the 
     filename was already present, the amount of bugs is increased by 1"""
     BUG_INDEX = 1;
-    #table is: [filename] = [(tuple), # bugs]
+    #table is: [filename] = [(metrics), # bugs]
     if filename in table:
         table[filename][BUG_INDEX] += 1
     else:
-        table[filename] = [tuple, 1]
+        table[filename] = [metrics, 1]
 
     return table #idk of dit moet of dat het bij reference is ;p
 
