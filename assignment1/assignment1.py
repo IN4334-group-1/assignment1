@@ -2,13 +2,8 @@ import sh
 from json import JSONDecoder
 from os import listdir, path
 from time import strptime, mktime
+import time
 import csv
-
-#TODO
-#Save all filenames + versions in table
-#Find commit(s) belonging to certain bugfix
-#Save minor, major, total, ownership, (1 bug) in table for specific file
-#Write down what choices we made and how we did everything :D
 
 def isClosedResolved(issue):
     return issue['fields']['status']['name'] == "Closed" and issue['fields']['resolution']['name'] == "Fixed"
@@ -49,12 +44,12 @@ def computeStatsOnFile(contribTuple):
 def linkBugFixNrToCommit(git, bugFixNr):
     """Given a bugfix nr (in the format: LUCENE-#NR#), this function returns the
     commit hash of this bugfix"""
-    commits = git.log("--no-merges", "--pretty=%s:::%H", "--grep", bugFixNr + ":").strip("\n").split("\n")
+    commits = git.log("--no-merges", "--pretty=%s//::://%H", "--grep", bugFixNr + ":").strip("\n").split("\n")
     #print("--no-merges", "--pretty=%s:::%H", "--grep", bugFixNr + ":")
     bugfixCommits = []
     if len(commits) > 0 and commits[0] != "":
         for commit in commits:
-            bugfixCommits.append(commit.split(":::")[1])
+            bugfixCommits.append(commit.split("//::://")[1])
     return bugfixCommits
 
 def linkCommitToFiles(commitHash):
@@ -77,17 +72,6 @@ def addTupleToTable(filename, metrics, table, nrOfBugs):
         table[filename] = [metrics, nrOfBugs]
 
     return table #idk of dit moet of dat het bij reference is ;p
-
-#def addBuglessFilesToTable(table):
-    #checkout latest commit that we consider
-    #get all files available
-    #get different versions of the file
-
-    #loop through all files in the repo (in specific folders, only ending in .java)
-    #TODO:
-    #then get the latest commit and loop through all the files that are currently available
-    #for each file, check if it exists in the table: if not, add it with 0 bugs?
-        #however, we use file versions, so use git hist and add every version of that file to the table?
 
 def getListOfCommitsUptoCommit(git, commitHash, filePath): 
     """Given a git repository, a commithash and a filePath, this function returns a list 
@@ -117,7 +101,8 @@ def getListOfCommitsUptoCommit(git, commitHash, filePath):
 def writeResultsToFile(results):
     """Writes the results to a .csv file, as follows:
     filename, minor, major, total, ownership, num_of_bugs"""
-    listWriter = csv.writer(open('result.csv', 'w+'), 
+    timestamp = int(time.time())
+    listWriter = csv.writer(open('result' + str(timestamp) + '.csv', 'w+'), 
                             delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
     for fileName, metrics in results.items():
         line = [fileName]
@@ -153,24 +138,8 @@ for f in listdir(PATH):
     issue = decoder.decode(jsonF.read())
     if isClosedResolved(issue) and isCorrectTimePeriod(issue):
         issues.append(issue['key'])
-        #break; #TODO: remove this
-
-
-#print(issues)
-#print(len(issues))
-
-#a = linkBugFixNrToCommit(git, issues[0])
-
-#print(a)
-#linkCommitToFiles('b3a74d7')
-
-#testFileName = 'java_b3a74d7'
-#testTuple = (1,2,3,0.55)
-#testTable = {testFileName: [testTuple, 2]}
-#print(addTupleToTable(testFileName, testTuple, testTable))
 
 results = {}
-
 
 for issue in issues:
     print(issue)
@@ -186,10 +155,12 @@ for issue in issues:
             fileName = javaFile + "_" + commitHash
             results = addTupleToTable(fileName, fileStats, results, 1)
 
-allCommitsInPeriod = git.log("--no-merges", "--pretty=%s:::%H", '--since={2015-01-01}', '--until={2015-07-01}').strip("\n").split("\n")
+writeResultsToFile(results) #Temp write found bugs to file already, just in case
+
+allCommitsInPeriod = git.log("--no-merges", "--pretty=%s//::://%H", '--since={2015-01-01}', '--until={2015-07-01}').strip("\n").split("\n")
 for commit in allCommitsInPeriod:
     print(commit)
-    (msg,commitHash) = commit.split(":::")
+    (msg,commitHash) = commit.split("//::://")
     if not isBugFixCommit(msg):
         for javaFile in linkCommitToFiles(commitHash):
             commits = getListOfCommitsUptoCommit(git, commitHash, javaFile)
