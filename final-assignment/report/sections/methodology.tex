@@ -1,12 +1,36 @@
 \section{Methodology}
+    Now that the research questions have been discussed, the approach for answering those questions can be explained.
+    We will start by detailing our sampling method. 
+    Thereafter, we introduce the features which we think do have influence on the amount of stars that a repository has.
+    Lastly, we discuss the methods for actually constructing a learning model that we can use to predict the amount of stars for a given project.
     \subsection{Sampling Method}
+        When we did a first exploration of our data, we found that the distribution of stars per project is extremely right skewed: there are a lot of projects with one or zero stars, while there are much less projects which have a lot of stars, as can be seen in \todo{ADD FIGURE/TABLE}.
+        Because of this skewness, the decision was made to use so-called stratified sampling.
+        With stratified sampling, we first have to divide the population into homegenous strata. 
+        Thereafter, we sample an equal amount of projects from each of these strata; 
+        all these samples together form the sample that is being used in the rest of the project.
+        
+        Each stratum has as characteristic that the amount of stars of the project in that stratum fall within a certain range. 
+        The ranges that will be used in this project are: [0, 10], (10, 100], (100, 1000], (1000, +].
+        Because the dataset is quite large, we can also create a quite large sample:         
+        out of each stratum, we will randomly select 500 projects for each stratum. The total size of our sample is thus 2000.
+        
+        Further, we split up our sample in a training set and a testing set. Out of our sample, we randomly pick 1000 projects which will form our training set. The remainder of the sample will be used as a testing set.
+        
+        Although we mentioned that the selecting of projects is completely random, it actually is not. In order to reduce bias in our sample, we decided to filter out any project by Google, Microsoft or Apple. 
+        The way in which they use GitHub is different from most other projects, but they do have a lot of stars, partly due to brand awareness.
+        
+
+        
+        
+    
         \todo{
             \begin{itemize}
                 \item Stratified sampling because of skewness
                 \item Discuss strata intervals
                 \item Discuss sample size
                 \item Discuss items that are excluded from the sample (google/microsoft projects)
-                \item Discuss testing/training split
+                \item Discuss training/testing split
             \end{itemize}
         }
     
