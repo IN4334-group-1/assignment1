@@ -35,6 +35,72 @@
         }
     
     \subsection{Features}
+    In order to be able to predict the amount of stars an OSS project will get, a model need to be designed.
+    Therefore a number of features is discussed first, which could influence the amount of stars on a project.
+    Each of these features fall into one of the high-level groups that are specified: general project characteristics, popularity of developers or organisation, documentation and activity.
+    After the features are defined, we can use them in combination with machine learning algorithm to create the actual prediction model.
+
+    \subsubsection{General project characteristics}
+    The first group contains general features belonging to a project. 
+    A feature is considered a general project feature if \todo{it cannot be categorized into the other groups}.
+    In this section the different features and reasons behind choosing them will be explained.
+    \textbf{Name of the project}\\
+    placeholder text \\
+    \textbf{Number of commits}\\
+    placeholder text \\
+    \textbf{Project country of origin}\\
+    \textbf{Number of commits per developer}\\
+    \textbf{Total amount of contributers}\\
+    \textbf{Main programming language}\\
+    \textbf{How long does the project exists}\\
+
+    %name of the project
+    %origin of project ('project owner'->country)
+    %#commits
+    %#commits/developer
+    %amount of contributors on project
+    %programming language
+    %hoe lang bestaat het project al?
+
+    \subsubsection{Popularity of developers or organisation}
+    \todo{intro}\\
+    \textbf{Average number of followers per developer}\\
+    \textbf{Maximum number of followers per developer}\\
+    \textbf{Number of developers in organisation}\\
+
+    %--Developers
+    %average #followers/developer
+    %max #followers/developer
+    %--Organisation
+    %#developers
+    %average #followers/developer
+    %max #followers/developer
+
+    \subsubsection{Documentation}
+    \todo{intro}\\
+    \textbf{Readme available}\\
+    \textbf{Wiki files available}\\
+    %readme present?
+    %wiki files present?
+
+    \subsubsection{Activity}
+    \todo{intro}\\
+    \textbf{Number of commits per day}\\
+    \textbf{Number of releases}\\
+    \textbf{Time between releases}\\
+    \textbf{Number of branches}\\
+
+    %#commits/day (follow-up: issue resolution time)
+    %#releases 
+    %#releases/time
+    %#branches
+
+ 
+    \subsection{Domain}
+    -Since some project domains are more popular, it is easier to get stars for projects in that domain \\
+    -Therefore the domain is also considered in the model, to be able to make better predictions as features might weight different across domains\\
+    -etc? ik weet niet precies hoe we domain willen doen ;p gewoon descriptions uitlezen en dan een domain ervan maken? 
+
         \todo{
             \begin{itemize}
                 \item Discuss high level features
