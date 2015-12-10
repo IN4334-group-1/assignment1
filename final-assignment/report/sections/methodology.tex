@@ -19,20 +19,15 @@
         
         Although we mentioned that the selecting of projects is completely random, it actually is not. In order to reduce bias in our sample, we decided to filter out any project by Google, Microsoft or Apple.
         The way in which they use GitHub is different from most other projects, but they do have a lot of stars, partly due to brand awareness; therefore, they are not included in our sample.
-        
-
-        
-        
-    
-        \todo{
-            \begin{itemize}
-                \item Stratified sampling because of skewness
-                \item Discuss strata intervals
-                \item Discuss sample size
-                \item Discuss items that are excluded from the sample (google/microsoft projects)
-                \item Discuss training/testing split
-            \end{itemize}
-        }
+        %\todo{
+        %    \begin{itemize}
+        %        \item Stratified sampling because of skewness
+        %        \item Discuss strata intervals
+        %        \item Discuss sample size
+        %        \item Discuss items that are excluded from the sample (google/microsoft projects)
+        %        \item Discuss training/testing split
+        %    \end{itemize}
+        %}
     
     \subsection{Features}
     In order to be able to predict the amount of stars an OSS project will get, a model need to be designed.
@@ -136,13 +131,13 @@
         Unfortunately, the domain of a project cannot be automatically deduced from the dataset. 
         Therefore, each project in our sample was given a domain manually. Domain is obviously a categorical variable and can take the following values: \todo{decide on possible domains}.
 
-        \todo{
-            \begin{itemize}
-                \item Discuss high level features
-                \item Specify high level features into actual metrics
-                \item Discuss adding of the `domain' to filter popular domain areas
-            \end{itemize}
-        }
+        %\todo{
+        %    \begin{itemize}
+        %        \item Discuss high level features
+        %        \item Specify high level features into actual metrics
+        %        \item Discuss adding of the `domain' to filter popular domain areas
+        %    \end{itemize}
+        %}
     
     
     \subsection{Finding relations}
@@ -154,8 +149,8 @@
         
         On top of the initial analysis using multiple linear regression, an attempt will be made to finetune our model so that the prediction is as accurate as possible. The step-wise regression algorithm will be used for this task.
     
-          \todo{
-            \begin{itemize}
-                \item Discuss machine learning algorithms (Multiple Linear Regression, Stepwise regression)
-            \end{itemize}
-        }
+       %\todo{
+       %     \begin{itemize}
+       %         \item Discuss machine learning algorithms (Multiple Linear Regression, Stepwise regression)
+       %     \end{itemize}
+       % }
