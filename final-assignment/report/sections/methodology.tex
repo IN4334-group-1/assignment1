@@ -49,7 +49,8 @@
         This can either be based on the developer that created the project, or on the majority of developers in the organisation
         \item[Number of commits per developer]
         This is the total amount of commits that each of the developers in the project have.
-        \todo{These commits do not include merge commits, so it gives an indication of the activity of each of the developers.}
+        These commits do not include merge commits, so it gives an indication of the activity of each of the developers.
+        %TODO: check whether commits include merge commits or not!
         \item[Number of forks]
         The number of forks is the total amount of forks that the project got since its intial creation.
         Since forking a repository means that someone is interested and possibly want to make use of the project as a resource for their own developments, it can be a good indication of the amount of stars a project might possibly get.
@@ -66,7 +67,8 @@
         \item[How long does the project exists]
         Newer project might have fewer stars, since they are not discovered by the majority of the GitHub users. 
         Therefore the time a project exists, might have influence on the amount of stars the project currently has.
-        \item[Number of lines of code] \todo{Larger projects have more lines of code, which can give an indication of being actively maintained or having multiple contributers $->$ more chance to get stars?}
+        %\item[Number of bytes] \todo{Larger projects have more lines of code, which can give an indication of being actively maintained or having multiple contributers $->$ more chance to get stars?}
+        %TODO: check whether number of bytes can be useful in model
     \end{LaTeXdescription}
 
     %name of the project
@@ -101,9 +103,11 @@
     %average #followers/developer
     %max #followers/developer
 
-    \todo{\subsubsection{Documentation} 
-        We also think that the fact that a project is not documented very well or even not documented at all can have influence on the appreciation users show for that project. Unfortunately, this is hard to measure as some projects do have extensive documentation on their own website, while they are not using the GitHub features for documenting the project.
-        At the moment of writing, it is also not possible to check if a project has a readme file or a wiki page on GitHub using the earlier discussed dataset. For future research, it might be interesting to involve this feature as well.}
+    %\todo{\subsubsection{Documentation} 
+        %We also think that the fact that a project is not documented very well or even not documented at all can have influence on the appreciation users show for that project. Unfortunately, this is hard to measure as some projects do have extensive documentation on their own website, while they are not using the GitHub features for documenting the project.
+        %At the moment of writing, it is also not possible to check if a project has a readme file or a wiki page on GitHub using the earlier discussed dataset. For future research, it might be interesting to involve this feature as well.}
+
+        %TODO: move to future work
     %readme present?
     %wiki files present?
 
@@ -116,7 +120,7 @@
             Although not all projects use the releases feature of GitHub, it is interesting to see if this numerical variable does have influence.
         \item[Time between releases]
             This numerical variable is another measure of activity: it is the average time measured in days between each release for a given project.
-        \item[Number of branches]         \todo{not present in dataset}
+       % \item[Number of branches]         \todo{not present in dataset}
     \end{LaTeXdescription}
 
     %#commits/day (follow-up: issue resolution time)
@@ -125,7 +129,7 @@
     %#branches
 
  
-    \subsection{Domain}
+    \subsubsection{Domain}
         Since some project domains are more popular, it is easier to get stars for projects in that domain, simply because more people are interested in that domain.
         Therefore the domain is also considered in the model, to be able to make better predictions as features might weight different across domains.
         Unfortunately, the domain of a project cannot be automatically deduced from the dataset. 
