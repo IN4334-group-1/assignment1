@@ -4,7 +4,7 @@
     Thereafter, we introduce the features which we think do have influence on the amount of stars that a repository has.
     Lastly, we discuss the methods for actually constructing a learning model that we can use to predict the amount of stars for a given project.
     \subsection{Sampling Method}
-        When we did a first exploration of our data, we found that the distribution of stars per project is extremely right skewed: there are a lot of projects with one or zero stars, while there are much less projects which have a lot of stars, as can be seen in \todo{ADD FIGURE/TABLE}.
+        When we did a first exploration of our data, we found that the distribution of stars per project is extremely right skewed: there are a lot of projects with one or zero stars, while there are much less projects which have a lot of stars, as can be seen in Figure \ref{fig:star-distribution-plot}.
         Because of this skewness, the decision was made to use so-called stratified sampling.
         With stratified sampling, we first have to divide the population into homegenous strata. 
         Thereafter, we sample an equal amount of projects from each of these strata; 
@@ -19,6 +19,12 @@
         
         Although we mentioned that the selecting of projects is completely random, it actually is not. In order to reduce bias in our sample, we decided to filter out any project by Google, Microsoft or Apple.
         The way in which they use GitHub is different from most other projects, but they do have a lot of stars, partly due to brand awareness; therefore, they are not included in our sample.
+        
+        \begin{figure}
+            \includegraphics[width=250pt]{figures/star-distribution}
+            \label{fig:star-distribution-plot}
+            \caption{An histogram of the amount of stars per project}
+        \end{figure}
         %\todo{
         %    \begin{itemize}
         %        \item Stratified sampling because of skewness
