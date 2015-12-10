@@ -12,13 +12,13 @@
         
         Each stratum has as characteristic that the amount of stars of the project in that stratum fall within a certain range. 
         The ranges that will be used in this project are: [0, 10], (10, 100], (100, 1000], (1000, +].
-        Because the dataset is quite large, we can also create a quite large sample:         
+        Because the dataset is very large, we can also create a quite large sample:         
         out of each stratum, we will randomly select 500 projects for each stratum. The total size of our sample is thus 2000.
         
         Further, we split up our sample in a training set and a testing set. Out of our sample, we randomly pick 1000 projects which will form our training set. The remainder of the sample will be used as a testing set.
         
-        Although we mentioned that the selecting of projects is completely random, it actually is not. In order to reduce bias in our sample, we decided to filter out any project by Google, Microsoft or Apple. 
-        The way in which they use GitHub is different from most other projects, but they do have a lot of stars, partly due to brand awareness.
+        Although we mentioned that the selecting of projects is completely random, it actually is not. In order to reduce bias in our sample, we decided to filter out any project by Google, Microsoft or Apple.
+        The way in which they use GitHub is different from most other projects, but they do have a lot of stars, partly due to brand awareness; therefore, they are not included in our sample.
         
 
         
@@ -47,7 +47,7 @@
     \subsection{Finding relations}
         Now that the features have been listed, we can try to infer relations between those features. More specifically, we have an independent variable - the amount of stars for a project - and we will try to correlate it with the independent variables - the features listed in the previous section.
         
-        The machine learning algorithm that comes to mind is linear regression. However, some of our features are categorical, e.g. the programming language of a project, which makes it impossible to use linear regression.
+        The machine learning algorithm that first comes to mind is linear regression. However, some of our features are categorical, e.g. the programming language of a project, which makes it impossible to use linear regression.
         Luckily, there is a variant available which is able to handle categorical variables; this algorithm is called `multiple linear regression'. 
         Initially, this algorithm will be used. Depending on the results, we will try out other algorithms like random forest and naive bayes.
         
