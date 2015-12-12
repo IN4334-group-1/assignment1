@@ -26,6 +26,9 @@
 
 *~
 
+# pdfs except deliverables
+!final-assignment/initial-analysis-report.pdf
+
 
 #### R #####
 # History files
