@@ -1,12 +1,18 @@
-\documentclass[10pt,draft]{IEEEtran}
+\documentclass[10pt,conference]{IEEEtran}
 
-\title{Super fancy MSR title}
+\usepackage{graphicx}
+
+\usepackage{xcolor}
+
+\newcommand\todo[1]{\textcolor{red}{#1}}
+
+\title{How to win a star on GitHub}
 
 \author{
     \IEEEauthorblockN{Michel Kraaijeveld}
     \IEEEauthorblockA{Delft University of Technology\\
                     Delft, the Netherlands\\
-                    Email: \\}
+                    Email: j.c.m.kraaijeveld@student.tudelft.nl\\}
     \and
     \IEEEauthorblockN{Tom den Braber}
     \IEEEauthorblockA{Delft University of Technology\\
@@ -33,9 +39,12 @@
 
 \input{sections/related-work}
 
+\input{sections/future-work}
+
 \input{sections/conclusion}
 
+
 \bibliography{references}{}
-\bibliographystyle{plain}
+\bibliographystyle{ieeetr}
 
 \end{document}
