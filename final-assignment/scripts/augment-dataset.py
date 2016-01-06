@@ -4,7 +4,9 @@ from csv import DictReader, DictWriter
 #fileList = ["avg-followers-per-project", "max-followers-per-project", "forks-per-project", 
  #   "nr-of-pull-requests-per-project", "number-of-commits-per-project", "stars-per-project"]
 
-fileList = ["country-per-project", "languages-per-project"]
+#fileList = ["country-per-project", "languages-per-project"]
+
+fileList = ["nr-of-devs-per-project"]
 
 for fileName in fileList:
     with open('exports/!' + fileName + '.csv') as csvfile:
@@ -20,12 +22,12 @@ for fileName in fileList:
         for row in reader:
             currentId = row[reader.fieldnames[0]]
             currentVal = row[reader.fieldnames[1]]
-            if currentVal != "":
-                finalDict.append({reader.fieldnames[0]: currentId, reader.fieldnames[1]: currentVal})
-                ids.remove(currentId)
+            #if currentVal != "":
+            finalDict.append({reader.fieldnames[0]: currentId, reader.fieldnames[1]: currentVal})
+            ids.remove(currentId)
         
         for i in ids:
-            finalDict.append({reader.fieldnames[0]: i, reader.fieldnames[1]: "unknown"})
+            finalDict.append({reader.fieldnames[0]: i, reader.fieldnames[1]: 0})
         
         with open('exports/' + fileName + '.csv', 'w') as csvfile:
             fieldnames = reader.fieldnames
