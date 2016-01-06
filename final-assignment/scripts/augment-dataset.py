@@ -21,7 +21,6 @@ for fileName in fileList:
             currentId = row[reader.fieldnames[0]]
             currentVal = row[reader.fieldnames[1]]
             if currentVal != "":
-                print currentId
                 finalDict.append({reader.fieldnames[0]: currentId, reader.fieldnames[1]: currentVal})
                 ids.remove(currentId)
         
