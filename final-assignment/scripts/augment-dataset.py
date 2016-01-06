@@ -6,7 +6,7 @@ from csv import DictReader, DictWriter
 
 #fileList = ["country-per-project", "languages-per-project"]
 
-fileList = ["nr-of-devs-per-project"]
+fileList = ["nr-of-accepted-pull-requests-per-project"]
 
 for fileName in fileList:
     with open('exports/!' + fileName + '.csv') as csvfile:
