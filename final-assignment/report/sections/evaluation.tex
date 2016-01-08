@@ -1,0 +1,28 @@
+\section{Evaluation}
+\todo{evaluation}
+
+\subsection{Threats to validity}
+\todo{intro}
+
+\subsubsection{Domains}
+The projects in the dataset have been classified into different domains.
+Since this has been done manually, it can occur that not all projects are classified in the right domains as it introduced subjectiveness.
+Some projects also span multiple domains and that makes it hard to categorize it correctly.
+Furthermore, the classification has been done only for the main categories.
+The projects could have been classified into subcategories, but with a sample size of two thousand projects this would then result in small samples for each of the domains.
+
+\subsubsection{Validations}
+The data in the GHTorrent dataset is not fully up to date with the latest changes on GitHub.
+This made it harder to validate the data that we retrieved, as it differs from the data we find when we look it up on GitHub.
+An example of this would be the amount of stars a project has.
+If GHTorrent contains data that is a couple of weeks old, the project might have gained or lost some stars in the meantime.
+
+\subsubsection{GitHub limitations}
+A limitation on GitHub's side is that deletions are not contained in the events that GHTorrent uses.\todo{REF}
+This can introduced inconsistent data, as projects could have been deleted without this data being in the GHTorrent dataset.
+
+\subsubsection{Unknown values}
+Not all information on GithHub is filled in or can be determined.
+Examples of this are the country of the developer that is often left blank, or the main language of the project that cannot be determined.
+These values are saved in our dataset as `unknown' and often comprise a large portion of the data.
+Because of that, estimations based on for example countries tend to point towards the unknown value.

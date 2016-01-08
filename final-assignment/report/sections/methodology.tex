@@ -10,8 +10,6 @@
         Thereafter, we sample an equal amount of projects from each of these strata; 
         all these samples together form the sample that is being used in the rest of the project.
         
-        \todo{Bachelli: Yours is a solid way to do sampling. To make it even better, you could check that the projects you sample have no relation whatsoever one to another (e.g., that they do not share developers) \\
-        Dus willen we dat erbij doen of gaat dat hem niet meer worden? :P} \\
         Each stratum has as characteristic that the amount of stars of the project in that stratum fall within a certain range. 
         The ranges that will be used in this project are: [0, 10], (10, 100], (100, 1000], (1000, +].
         Because the dataset is very large, we can also create a quite large sample:         
@@ -21,6 +19,8 @@
         
         Although we mentioned that the selecting of projects is completely random, it actually is not. To reduce bias in our sample, we decided to filter out any project by Google, Microsoft or Apple.
         The way in which they use GitHub is different from most other projects, but they do have a lot of stars, partly due to brand awareness; therefore, they are not included in our sample.
+        Furthermore, deleted projects are also not contained in the dataset.
+        The reason for this is that not all of the features can be successfully applied to deleted projects, and we don't consider them to hold the key to getting stars on GitHub; as we would expect a successful project to still be around.
         
         %\todo{
         %    \begin{itemize}
@@ -138,10 +138,12 @@
     \subsubsection{Domain}
         Since some project domains are more popular, it is easier to get stars for projects in that domain, simply because more people are interested in that domain.
         Therefore the domain is also considered in the model, to be able to make better predictions as features might weight different across domains.
-        Unfortunately, the domain of a project cannot be automatically deduced from the dataset. 
-        Therefore, each project in our sample was given a domain manually. Domain is obviously a categorical variable and can take the following values: \todo{decide on possible domains}.
-        \todo{TODO: http://dl.acm.org/citation.cfm?id=211844   for domains maybe? \\
-        OR: https://cran.r-project.org/web/classifications/ACM-2012.html   we could use some of those stated here}
+        Unfortunately, the domain of a project cannot be automatically deduced from the dataset.
+        Therefore, each project in our sample was given a domain manually.
+        A domain is obviously a categorical variable and is based on the 2012 ACM Classification. \todo{REF}
+        From this classification, we only considered the main categories.
+        The reasoning behind this is that the amount of subcategories is huge, and if the projects were divided into them there might be domains that would only contain a single project.
+
 
         %\todo{
         %    \begin{itemize}
