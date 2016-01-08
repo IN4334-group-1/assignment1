@@ -4,7 +4,7 @@
     Thereafter, we introduce the features which we think do have influence on the amount of stars that a repository has.
     Lastly, we discuss the methods for actually constructing a learning model that we can use to predict the amount of stars for a given project.
     \subsection{Sampling Method}
-        The distribution of stars per project appears to be extremely right skewed: there are projects with one or zero stars, while there are much less projects which have a lot of stars, as can be seen in Figure \ref{fig:star-distribution-plot}.
+        The distribution of stars per project appears to be extremely right skewed: there are projects with one or zero stars, while there are much less projects which have a lot of stars, as can be seen in Figure \ref{fig:nr-stars-plot}.
         Because of this skewness, the decision was made to use so-called stratified sampling.
         With stratified sampling, we first have to divide the population into strata. 
         Thereafter, we sample an equal amount of projects from each of these strata; 
@@ -66,7 +66,7 @@
         When a project has more contributors, it might give a prediction on the amount of stars the project will possibly get.
         \item[Main programming language]
         The language that is used most throughout the project is considered the main programming language. 
-        Since some languages are easier to learn and understand, or is more popular, projects that use that language might be able to attract more users and therefore stars.\cite{codementor-2015}
+        Since some languages are easier to learn and understand, or is more popular, projects that use that language might be able to attract more users and therefore stars.\cite{ieee-2015}
         \item[How long does the project exists]
         Newer project might have fewer stars, since they are not discovered by the majority of the GitHub users. 
         Therefore the time a project exists, might have influence on the amount of stars the project currently has.
