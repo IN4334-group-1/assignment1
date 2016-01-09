@@ -72,7 +72,7 @@
         Therefore the time a project exists, might have influence on the amount of stars the project currently has.
         %\item[Number of bytes] \todo{Larger projects have more lines of code, which can give an indication of being actively maintained or having multiple contributors $->$ more chance to get stars?}
         %TODO: check whether number of bytes can be useful in model
-    \end{LaTeXdescription}
+    \end{LaTeXdescription}\hspace*{\fill}
 
     %name of the project
     %origin of project ('project owner'->country)
@@ -82,10 +82,9 @@
     %programming language
     %hoe lang bestaat het project al?
 
-    \subsubsection{Popularity of developers or organisation}
-    \todo{Popularity een keer langslopen of we dit gaan hernoemen, of anders opdelen zodat het wel de popularity test}\\
-    When a developer or organisation is already popular on GitHub, a new project created by them can get attention from other users more easily.
-    This high-level feature therefore contains features that can be used to measure the popularity of a developer or organisation in order to be included in the prediction model.
+    \subsubsection{Characteristics of developers and organisation}
+    When a developer or organisation is already known on GitHub and has established a group of followers, a new project created by them can get attention from other users more easily.
+    To be able to find out whether this has influence on the amount of stars a project can possibly get, a couple of features are created to be included in the prediction model.
     \begin{LaTeXdescription}
         \item[Average number of followers per developer]
         This is the average number of followers between all developers that contribute to the project.
@@ -97,7 +96,7 @@
         Again, if the project is created by an organisation, this number indicates the average amount of followers the developers in the organisation have.
         \item[Maximum number of followers per developer in organisation]
         This feature is like the previous one, except it now shows the maximum amount of followers a developer in the organisation has.
-    \end{LaTeXdescription}
+    \end{LaTeXdescription}\hspace*{\fill}
 
     %--Developers
     %average #followers/developer
@@ -127,7 +126,7 @@
         %\item[Time between releases]
         %    This numerical variable is another measure of activity: it is the average time measured in days between each release for a given project.
        % \item[Number of branches]         \todo{not present in dataset}
-    \end{LaTeXdescription}
+    \end{LaTeXdescription}\hspace*{\fill}
 
     %#commits/day (follow-up: issue resolution time)
     %#releases 
@@ -140,7 +139,7 @@
         Therefore the domain is also considered in the model, to be able to make better predictions as features might weight different across domains.
         Unfortunately, the domain of a project cannot be automatically deduced from the dataset.
         Therefore, each project in our sample was given a domain manually.
-        A domain is obviously a categorical variable and is based on the 2012 ACM Classification. \todo{REF}
+        A domain is obviously a categorical variable and is based on the 2012 ACM Classification. \cite{acm-2012}
         From this classification, we only considered the main categories.
         The reasoning behind this is that the amount of subcategories is huge, and if the projects were divided into them there might be domains that would only contain a single project.
 

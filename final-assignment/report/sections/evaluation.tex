@@ -1,26 +1,29 @@
 \section{Evaluation}
-\todo{Todo: Describe this better: \\
-Data has been evaluated, since random samples were taken to be checked on GitHub to see if the found data corresponds with the actual data. Also outliers where double checked to make sure they are right and not some anomalies in the data.}
+To make sure the created dataset contains the data we expect, there have been numerous validations on it.
+Whenever the data of one of the features was retrieved, we manually checked some of the entries.
+This was done picking a number of random samples from the data and looking it up on GitHub to see if the data we have found corresponds with the actual data.
+Another point that we checked on, were the outliers in the data.
+Whenever a feature contained entries that were much higher or lower than the other ones, we also manually checked them on GitHub to make sure the outliers are correct and not some anomalies in our data.
 
 \subsection{Threats to validity}
-\todo{intro}
+When creating the dataset, some issues arose which will be further explained in this section.\\
 
 \subsubsection{Domains}
 The projects in the dataset have been classified into different domains.
 Since this has been done manually, it can occur that not all projects are classified in the right domains as it introduced subjectiveness.
 Some projects also span multiple domains and that makes it hard to categorize it correctly.
 Furthermore, the classification has been done only for the main categories.
-The projects could have been classified into subcategories, but with a sample size of two thousand projects this would then result in small samples for each of the domains.
+The projects could have been classified into subcategories, but with a sample size of two thousand projects this would then result in small samples for each of the domains.\\
 
 \subsubsection{Validations}
 The data in the GHTorrent dataset is not fully up to date with the latest changes on GitHub.
 This made it harder to validate the data that we retrieved, as it differs from the data we find when we look it up on GitHub.
 An example of this would be the amount of stars a project has.
-If GHTorrent contains data that is a couple of weeks old, the project might have gained or lost some stars in the meantime.
+If GHTorrent contains data that is a couple of weeks old, the project might have gained or lost some stars in the meantime.\\
 
 \subsubsection{GitHub limitations}
-A limitation on GitHub's side is that deletions are not contained in the events that GHTorrent uses.\todo{REF}
-This can introduced inconsistent data, as projects could have been deleted without this data being in the GHTorrent dataset.
+A limitation on GitHub's side is that deletions are not contained in the events that GHTorrent uses.\cite{gousios-2013}
+This can introduced inconsistent data, as projects could have been deleted without this data being in the GHTorrent dataset.\\
 
 \subsubsection{Unknown values}
 Not all information on GithHub is filled in or can be determined.
