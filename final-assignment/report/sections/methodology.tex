@@ -1,7 +1,7 @@
 \section{Methodology}
     Now that the research questions have been discussed, the approach for answering those questions can be explained.
     We will start by detailing our sampling method. 
-    Thereafter, we introduce the features which we think do have influence on the amount of stars that a repository has.
+    Thereafter, we introduce the features which we think are related to the amount of stars that a repository has.
     Lastly, we discuss the methods for actually constructing a learning model that we can use to predict the amount of stars for a given project.
     \subsection{Sampling Method}
         The distribution of stars per project appears to be extremely right skewed: there are projects with one or zero stars, while there are much less projects which have a lot of stars, as can be seen in Figure \ref{fig:nr-stars-plot}.
@@ -34,9 +34,9 @@
     
     \subsection{Features}
     In order to be able to predict the amount of stars an OSS project will get, a model need to be designed.
-    Therefore a number of features is discussed first, which could influence the amount of stars on a project.
+    Therefore a number of features is discussed first, which could be related to the amount of stars on a project.
     Each of these features fall into one of the high-level features that are specified: general project characteristics, popularity of developers or organisation, and activity.
-    Next to these high-level features, the domain is also considered as that is another aspect that can influence the amount of stars.
+    Next to these high-level features, the domain is also considered as that is another aspect that can be related to the amount of stars.
     After the features are defined, we can use them in combination with a machine learning algorithm to create the actual prediction model.\\
 
     \subsubsection{General project characteristics}
@@ -84,7 +84,7 @@
 
     \subsubsection{Characteristics of developers and organisation}
     When a developer or organisation is already known on GitHub and has established a group of followers, a new project created by them can get attention from other users more easily.
-    To be able to find out whether this has influence on the amount of stars a project can possibly get, a couple of features are created to be included in the prediction model.
+    To be able to find out whether this has any relation to the amount of stars a project can possibly get, a couple of features are created to be included in the prediction model.
     \begin{LaTeXdescription}
         \item[Average number of followers per developer]
         This is the average number of followers between all developers that contribute to the project.
