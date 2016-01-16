@@ -70,6 +70,7 @@
         \item[How long does the project exists]
         Newer project might have fewer stars, since they are not discovered by the majority of the GitHub users. 
         Therefore the time a project exists, might have influence on the amount of stars the project currently has.
+        \item[Description available] GitHub offers the possibility of giving a one-line description, which is placed directly below the title. Having a good or catchy description might attract users to examine the project further.
         %\item[Number of bytes] \todo{Larger projects have more lines of code, which can give an indication of being actively maintained or having multiple contributors $->$ more chance to get stars?}
         %TODO: check whether number of bytes can be useful in model
     \end{LaTeXdescription}\hspace*{\fill}
@@ -91,11 +92,11 @@
         \item[Maximum number of followers per developer]
         This number indicates the maximum amount of followers the developers that contribute to the project have.
         \item[Number of developers in organisation]
-        If the project is created by an organisation, this number indicates the amount of developers that belong to the organisation.
+        If the project is created by an organisation, this number indicates the amount of developers that belong to the organisation. Else, the number of developers in the organisation is set to be one.
         \item[Average number of followers per developer in organisation]
-        Again, if the project is created by an organisation, this number indicates the average amount of followers the developers in the organisation have.
+        If the project is created by an organisation, this number indicates the average amount of followers the developers in the organisation have. Else, the amount of followers of the project owner is inserted here.
         \item[Maximum number of followers per developer in organisation]
-        This feature is like the previous one, except it now shows the maximum amount of followers a developer in the organisation has.
+        This feature is like the previous one, except it now shows the maximum amount of followers a developer in the organisation has. When the project is owned by a user, the amount of followers of the project owner is inserted here.
     \end{LaTeXdescription}\hspace*{\fill}
 
     %--Developers
@@ -141,7 +142,7 @@
         Therefore, each project in our sample was given a domain manually.
         A domain is obviously a categorical variable and is based on the 2012 ACM Classification. \cite{acm-2012}
         From this classification, we only considered the main categories.
-        The reasoning behind this is that the amount of subcategories is huge, and if the projects were divided into them there might be domains that would only contain a single project.
+        The reasoning behind this is that the amount of subcategories is quite large, and if the projects were divided into them there might be domains that would only contain a single project.
 
 
         %\todo{
