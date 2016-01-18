@@ -5,7 +5,7 @@
     Lastly, we discuss the methods for actually constructing a learning model that we can use to predict the amount of stars for a given project.
     \subsection{Sampling Method}
         The distribution of stars per project appears to be extremely right skewed: there are projects with one or zero stars, while there are much less projects which have a lot of stars, as can be seen in Figure \ref{fig:nr-stars-plot}.
-        Because of this skewness, the decision was made to use so-called stratified sampling.
+        Because of this skewness, the decision was made to use \textit{stratified sampling}\cite{TODO}.
         With stratified sampling, we first have to divide the population into strata. 
         Thereafter, we sample an equal amount of projects from each of these strata; 
         all these samples together form the sample that is being used in the rest of the project.
@@ -33,7 +33,7 @@
         %}
     
     \subsection{Features}
-    In order to be able to predict the amount of stars an OSS project will get, a model need to be designed.
+    To be able to predict the amount of stars an OSS project will get, a model need to be designed.
     Therefore a number of features is discussed first, which could be related to the amount of stars on a project.
     Each of these features fall into one of the high-level features that are specified: general project characteristics, popularity of developers or organisation, and activity.
     Next to these high-level features, the domain is also considered as that is another aspect that can be related to the amount of stars.
@@ -42,7 +42,6 @@
     \subsubsection{General project characteristics}
     The first high-level feature contains general features belonging to a project. 
     A feature is considered a general project feature if it cannot be categorized into the other high-level features.
-    In this section the different features and reasons behind choosing them will be explained.
     \begin{LaTeXdescription}
         %\item[Number of commits]
         %This is the total amount of commits since project creation.
@@ -85,7 +84,7 @@
 
     \subsubsection{Characteristics of developers and organisation}
     When a developer or organisation is already known on GitHub and has established a group of followers, a new project created by them can get attention from other users more easily.
-    To be able to find out whether this has any relation to the amount of stars a project can possibly get, a couple of features are created to be included in the prediction model.
+    To find out whether this has any relation to the amount of stars a project can possibly get, five features are created to be included in the prediction model.
     \begin{LaTeXdescription}
         \item[Average number of followers per developer]
         This is the average number of followers between all developers that contribute to the project.
@@ -136,11 +135,11 @@
 
  
     \subsubsection{Domain}
-        Since some project domains are more popular, it is easier to get stars for projects in that domain, simply because more people are interested in that domain.
-        Therefore the domain is also considered in the model, to be able to make better predictions as features might weight different across domains.
+        Since some project domains are more popular, it is easier to get stars for projects in that domain, simply because more people are interested in that domain. \todo{references}
+        Therefore the domain is also considered in the model, to make better predictions as features might weight different across domains.
         Unfortunately, the domain of a project cannot be automatically deduced from the dataset.
         Therefore, each project in our sample was given a domain manually.
-        A domain is obviously a categorical variable and is based on the 2012 ACM Classification. \cite{acm-2012}
+        A domain is a categorical variable and is based on the 2012 ACM Classification. \cite{acm-2012}
         From this classification, we only considered the main categories.
         The reasoning behind this is that the amount of subcategories is quite large, and if the projects were divided into them there might be domains that would only contain a single project.
 
@@ -168,3 +167,5 @@
        %         \item Discuss machine learning algorithms (Multiple Linear Regression, Stepwise regression)
        %     \end{itemize}
        % }
+
+       \todo{Add machine learning algorithm info and how we created the feature table etc.}

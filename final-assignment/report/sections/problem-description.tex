@@ -1,31 +1,65 @@
 \section{Problem Description}
     Although the amount of stars for a project are far from the only indicator of a project's success, they give an indication of how many people actually like the project.
-    For developers, it might be important to know how they can gain the appreciation of other GitHub users: the more people that use or collaborate to a project, the faster it will evolve.
+    From a developer perspective, this means that the amount of stars can have multiple effects and advantages.
+    First of all, it is always good to get feedback from users.
+    If the users can indirectly show the developer to keep up the good work by simply starring the project, the developer will notice that his work is appreciated and is something that people like to see or use.
+    Furthermore, when more people appreciate a project, there is a greater chance that they will not only use it, but even collaborate to the project.
+    When more users give input to the developers, this can lead to more bugs being found or features being added, resulting in an overall better project.
+    For a developer it might therefore be useful to get as many stars as possible, as it can help evolve a project faster.
+    Finally, as stated earlier, GitHub has its own ranking systems that mostly involve the amount of stars for a project.
+    If a developer has enough stars in a specific timespan, for instance a day, its project can show up in one of these rankings and will be available to a bigger audience of potential users.
 
-    We will now further concretize the subject of this research. 
-    The main research question is as follows: `Can we predict the amount of stars a project on GitHub will get when looking at its characteristics?'
+    In other words, by getting as many stars on GitHub as possible, there is a possibility that your project will attract a bigger audience and will deliver a better product due to feedback.
+
+%Problem: give background: source of problem, negative consequences, potential benefits of solving problem
+
+
+%Background
+    As shown, there are a lot of reasons why it is useful to get your project starred on GitHub.
+    However, this paper also aims at finding out which factors might have an influence on the starring-behaviour of users.
+    In order to do that, a dataset is needed which contains information from GitHub.
+    There are at the time of writing two possible ways to get access to such a dataset: through the GitHubArchive project \cite{TODO} or GHTorrent project \cite{TODO}.
+    GitHubArchive uses the GitHub API to monitor over 20 events \cite{TODO} that it provides. 
+    They have been doing this since the beginning of 2011 \cite{TODO}, but their documentation is not the best.
+    Because of that, it is not entirely clear what data there is ready to use and how it is related to each other.
+    GHTorrent on the other hand also contains GitHub data, but it only contains data from 2012 onwards \cite{TODO}.
+    However, their documentation is much better and gives a clear overview of the available data and how it can be queried.
+    Another advantage is the online MySQL environment \cite{TODO} that is available to query their database.
+    \todo{proberen iets te zeggen over dat de dataset erg groot is, waarom dat handig is en waarom wij er een sample van pakken. Dit dus ook blend-in met de rest van de tekst zien te krijgen ;p}
+
+
+    %https://www.githubarchive.org
+    %http://ghtorrent.org/
+    %https://developer.github.com/v3/activity/events/types/
+    %http://ghtorrent.org/dblite/
+
+    Upon closer inspection of the GHTorrent dataset, it turns out that it also contains information that is not useful regarding the scope of this paper. 
+    Example of this are the repository milestones and issue tracking event.
+    Because the paper does not include these events as features, it is not useful to include them in the dataset on which the calculations will be done. 
+    Therefore a new dataset is created which only includes the useable events. 
+    The data that is included in the new dataset is more extensively explained in Section \ref{TODO}, where also the features are explained.
+    The dataset contains two thousand projects and can be found on \todo{(not yet)} https://github.com/IN4334-group-1/msr.
+
+    With the use of the new dataset, the following question will be answered in this paper: `Can we predict the amount of stars a project on GitHub will get by looking at its characteristics?'
     This high-level question can be split up into two more concrete questions:
     \begin{itemize}
-        \item Which factors influence the popularity of a project?
+        \item Which factors influence the amount of stars of a project?
         \item To what extent can we accurately predict the amount of stars on a project?
     \end{itemize}
-    
-    %\todo{waarom onderzoeken hierin, waarom is het nuttig, wat hebben mensen eraan}\\
-    
-    To answer the questions specified earlier, a dataset which contains a lot of data concerning the projects on GitHub is needed. 
-    This dataset is available: GHTorrent \cite{gousios-2013} is a dataset which is constantly mining the GitHub application for more data on projects, and contains all the data that we need for this research.
-
-    %\todo{More background info}
-
-    However, since it also contains data that is not useful for this particular research, we chose to create our own dataset based on GHTorrent.
-    This dataset contains 2000 open source projects with several features defined for each of them and is freely available for anyone to use.
-    It can \todo{(not yet)} be found on https://github.com/IN4334-group-1/msr.
 
 
-    %\todo{
-    %\begin{itemize}
-    %    \item Motivation
-    %    \item Our research questions
-    %    \item a short introduction into the dataset of Gousios
-    %\end{itemize}
-    %}
+
+
+%    - stars kunnen een indicatie van het succes van een project zijn (hoewel er meer factoren aan gebonden zijn)
+%    - het is als developer dus handig om te weten hoe je aan meer sterren zou kunnen komen, omdat dat je project positief kan beinvloeden: meer gebruikers, dus meer dingen die worden gevonden = beter project en meer mensen die eraan mee kunnen werken.
+%    - verder is het interessant om te zien of er degelijke factoren zijn die veel invloed op een project kunnen hebben en waar dus op gelet moet worden als je een succesvol project wilt opzetten
+
+%    -niet veel informatie beschikbaar hierover, dus het is erg interessant wat de uitkomst zal zijn.
+%    -omdat er weinig is, moet er dus een nieuwe dataset gemaakt worden die we kunnen gebruiken
+%    -is al wel wat van met githubarchive en ghtorrent
+ %   -hiervan gebruiken we ghtorrent om tot onze eigen dataset te komen, want het heeft een handige grafische user interface enzo. githubarchive was minder duidelijk in wat ze precies aan data hadden
+
+%    -ghtorrent is altijd bezig met het verzamelen van nieuwe data van github, wat ervoor zorgt dat er een hele grote dataset ter beschikking is. 
+%    -voordeel is dat je er sample van kunt maken, en dat een ander dit ook weer zou kunnen doen voor een vervolg of dezelfde studie. 
+%    -dataset bevat alle informatie die github vrijgeeft, tot een bepaalde tijd, dus er zit ook data tussen die voor ons niet van waarde is. Zo hebben wij geen interesse in de repository milestones end issue tracking. Omdat ze toch niet gebruikt gaan worden, heeft het geen zin om ze wel in de dataset te hebben staan 
+%    -de dingen die wel in de dataset komen, staan beschreven onder methodology. de genoemde features daar zijn geinclude in de dataset en worden gebruikt voor dit onderzoek
