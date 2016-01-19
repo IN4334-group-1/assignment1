@@ -1,4 +1,4 @@
-"X.id.","X.country_code.","commits_per_dev","forks","is_fork","pull_requests","contributors","language","age","avg_followers","max_followers","commits_per_day","pr_ratio","stars","domains","members_per_organization","average_followers_organization","max_followers_organization","has_description"
+"id","country_code","commits_per_dev","forks","is_fork","pull_requests","contributors","language","age","avg_followers","max_followers","commits_per_day","pr_ratio","stars","domains","members_per_organization","average_followers_organization","max_followers_organization","has_description"
 6,"unknown",65.7179023508137,4116,"false",11680,553,"C++",1880.65833053649,29.455,1174,19.3240842368389,0.484931506849315,7267,"Software and its engineering",1,721,721, "true"
 231,"unknown",23.8085106382979,251,"false",355,94,"Ruby",1748.49952266612,140.7957,2507,1.27995459591975,0.540845070422535,3039,"Software and its engineering",9,156.5556,758, "true"
 280,"unknown",27.8333333333333,832,"false",77,12,"JavaScript",1273.25527498094,51.6,187,0.262319745743838,0.0779220779220779,3529,"Software and its engineering",7,38.1429,120, "true"
