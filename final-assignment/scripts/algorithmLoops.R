@@ -138,6 +138,30 @@ nn.loop <- function(model, data, runs=10) {
 	}
 
 	results
+}
 
+glm.loop <- function(model, data, runs=10) {
+	results = c();
 
+	for (i in 1:runs) {
+		sample.train <- sample(nrow(data), size = 0.5 * nrow(data))
+	    train.data <- data[sample.train,]
+	    test.data <- data[-sample.train,]
+
+	    GLinearModel <- glm(model, data=train.data, na.action=na.omit)
+		GLinearModel$xlevels[["country_code"]] <- union(GLinearModel$xlevels[["country_code"]], levels(ds$country_code))
+		GLinearModel$xlevels[["language"]] <- union(GLinearModel$xlevels[["language"]], levels(ds$language))
+		GLinearModel$xlevels[["domains"]] <- union(GLinearModel$xlevels[["language"]], levels(ds$domains))
+
+		glmPrediction <- predict(GLinearModel, newdata=test.data, na.action=na.omit)
+
+		predictions.glm.ds <- as.data.frame(glmPrediction)
+		predictions.glm.ds$index <- as.numeric(rownames(predictions.glm.ds))
+		predictions.glm.ds <- predictions.glm.ds[with(predictions.glm.ds, order(index)),]
+		testDataMean <- mean(test.data[rownames(predictions.glm.ds),]$stars) #predictions.glm.ds is een dataframe met resultaten
+		SSTot <- sum((test.data[rownames(predictions.glm.ds),]$stars - testDataMean)^2) 
+		SSRes <- sum((test.data[rownames(predictions.glm.ds),]$stars - predictions.glm.ds$glmPrediction)^2)
+		results[i] <- (1 - SSRes/SSTot) 
+	}
+	results
 }
