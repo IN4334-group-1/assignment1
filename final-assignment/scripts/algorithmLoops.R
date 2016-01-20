@@ -39,11 +39,11 @@ stepwise.loop <- function(model, data, runs=10) {
 	    test.data <- data[-sample.train,]
 
 	    linearModel <- lm(model, data=train.data, na.action=na.omit)
-		linearModel$xlevels[["country_code"]] <- union(linearModel$xlevels[["country_code"]], levels(ds$country_code))
-		linearModel$xlevels[["language"]] <- union(linearModel$xlevels[["language"]], levels(ds$language))
-		linearModel$xlevels[["domains"]] <- union(linearModel$xlevels[["language"]], levels(ds$domains))
 
 		stepModel <- step(linearModel, na.action=na.omit)
+		stepModel$xlevels[["country_code"]] <- union(stepModel$xlevels[["country_code"]], levels(ds$country_code))
+		stepModel$xlevels[["language"]] <- union(stepModel$xlevels[["language"]], levels(ds$language))
+		stepModel$xlevels[["domains"]] <- union(stepModel$xlevels[["language"]], levels(ds$domains))
 
 		linearPrediction <- predict(stepModel, newdata=test.data, na.action=na.omit)
 
