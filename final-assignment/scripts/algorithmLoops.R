@@ -1,6 +1,7 @@
 
 library(pls)
 library(nnet)
+library(randomForest)
 
 
 linear.loop <- function(model, data, runs=10) {
@@ -164,4 +165,28 @@ glm.loop <- function(model, data, runs=10) {
 		results[i] <- (1 - SSRes/SSTot) 
 	}
 	results
+}
+
+rf.loop <- function(model, data, runs=10) {
+    results = c();
+    for (i in 1:runs) {
+		sample.train <- sample(nrow(data), size = 0.5 * nrow(data))
+        train.data <- data[sample.train,]
+        test.data <- data[-sample.train,]
+
+        rfModel <- randomForest(model, data=train.data, na.action=na.omit)
+
+        rfPrediction <- predict(rfModel, newdata=test.data, na.action=na.omit)
+
+        predictions.rf.ds <- as.data.frame(rfPrediction)
+        predictions.rf.ds$index <- as.numeric(rownames(predictions.rf.ds))
+        predictions.rf.ds <- predictions.rf.ds[with(predictions.rf.ds, order(index)),]
+
+        testDataMean <- mean(test.data[rownames(predictions.rf.ds),]$stars) 
+        SSTot <- sum((test.data[rownames(predictions.rf.ds),]$stars - testDataMean)^2) 
+        SSRes <- sum((test.data[rownames(predictions.rf.ds),]$stars - predictions.rf.ds$rfPrediction)^2)
+        results[i] <- (1 - SSRes/SSTot) 
+	}
+	
+    results
 }
