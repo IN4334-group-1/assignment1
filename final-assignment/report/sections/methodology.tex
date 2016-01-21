@@ -9,10 +9,9 @@
         With stratified sampling, we first have to divide the population into strata. 
         Thereafter, we sample an equal amount of projects from each of these strata; 
         all these samples together form the sample that is being used in the rest of the project.
-        
-        \todo{According to large amounts of data collection, we figure out that a majority of repositories’ forks are below 100, where those below 10 account for most of the part. Although there are big projects with forks over 1000, they just weigh a small portion on GitHub, which means that if we randomly take a sample from GitHub, repositories with 10 or less forks will occupy most of the sample and obviously models based on such sample shall not reflect behavior of repositories whose forks are in other levels. Due to this reason, we separate all repositories into four parts, according to the number of forks: [0, 10], (10,100], (100, 1000], (1000, +].}
         Each stratum has as characteristic that the amount of stars of the project in that stratum fall within a certain range. 
         The ranges that will be used in this project are: [0, 10], (10, 100], (100, 1000], (1000, +].
+        The reasoning behind these ranges is based on the research by Chen et al. where they used the same ones for splitting their data that was based on forks; as the same characteristics applied to the amount of stars. \ref{TODO}
         Because the dataset is very large, we can also create a quite large sample:         
         out of each stratum, we will randomly select 500 projects for each stratum. The total size of our sample will therefore consists of two thousand projects.
         
