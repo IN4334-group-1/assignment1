@@ -1,10 +1,20 @@
 \section{Results}
-    \subsection{Intermediate Data Exploration}
-        During the intermediate data exploration, the dataset has been fully created and most of the features have been visualized. 
+    \subsection{Data Exploration}
+        During the data exploration, the dataset has been fully created and all of the features have been visualized. 
         The only thing that is still missing at this point, is the domain classification as it needs to added manually.
-        Most of the data seems to be strongly right skewed, for example, take a look at Figures \ref{fig:avg-follower-contributor-plot} - \ref{fig:nr-commit-contributor-plot}.
-        However, there are also plots that did not have this right skew property.
-        These will be explained in more detail, as they require some more understandig of the data.
+        %Most of the data seems to be strongly right skewed, for example, take a look at Figures \ref{fig:avg-follower-contributor-plot} - \ref{fig:nr-commit-contributor-plot}.
+        %However, there are also plots that did not have this right skew property.
+        %These will be explained in more detail, as they require some more understandig of the data.
+        Most of the features are extremely right skewed; these have not been displayed graphically but can be found in Figure \ref{fig:right-skewed-features}. This table displays the minimum, maximum, mean and median value for each of the features.
+        It can be easily seen that the average is always higher than the median, which is an indication that the data is right skewed.
+        However, other features did give more interesting insights; this involves mostly the categorical variables. 
+        This report does include a visualisation of those features, as well as an explanation as they might require some deeper understanding of the data.
+        
+        \begin{figure}[h!]
+	        \includegraphics[width=250pt]{figures/data_summary_table}
+	        \caption{The minimum value, maximum value, mean and median of all the right skewed variables}
+	        \label{fig:right-skewed-features}
+	    \end{figure}
         
     	\begin{LaTeXdescription}
     	\item[Countries]
@@ -40,53 +50,47 @@
     	\end{LaTeXdescription}
         
         \todo{INSTEAD of all the pictures, add a table for all numerical values with min, max, mean, median, standard deviation}
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/average-number-of-followers-per-project-contributor}
-	        \caption{The average number of followers per project contributor}
-	        \label{fig:avg-follower-contributor-plot}
-	    \end{figure}
+	    %\begin{figure}[t!]
+	    %    \includegraphics[width=250pt]{figures/average-number-of-followers-per-project-contributor}
+	    %    \caption{The average number of followers per project contributor}
+	    %    \label{fig:avg-follower-contributor-plot}
+	    %\end{figure}
 
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/maximum-number-of-followers-per-project-contributor}
-	        \caption{The maximum number of followers per project contributor}
-	        \label{fig:max-follower-contributor-plot}
-	    \end{figure}
+%	    \begin{figure}[t!]
+	  %      \includegraphics[width=250pt]{figures/maximum-number-of-followers-per-project-contributor}
+	  %      \caption{The maximum number of followers per project contributor}
+	  %      \label{fig:max-follower-contributor-plot}
+	  %  \end{figure}
 
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/nr-of-accepted-pull-requests-per-project}
-	        \caption{The number of accepted pull requests per project}
-	        \label{fig:accepted-pull-plot}
-	    \end{figure}
+	   % \begin{figure}[t!]
+	   %     \includegraphics[width=250pt]{figures/nr-of-accepted-pull-requests-per-project}
+	   %     \caption{The number of accepted pull requests per project}
+	   %     \label{fig:accepted-pull-plot}
+	   % \end{figure}
 
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/nr-of-contributors-per-project}
-	        \caption{The number of contributors per project}
-	        \label{fig:nr-contributors-plot}
-	    \end{figure}
+	   % \begin{figure}[t!]
+	   %     \includegraphics[width=250pt]{figures/nr-of-contributors-per-project}
+	   %     \caption{The number of contributors per project}
+	   %     \label{fig:nr-contributors-plot}
+	   % \end{figure}
 
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/number-of-forks-per-project}
-	        \caption{The number of forks per project}
-	        \label{fig:nr-forks-plot}
-	    \end{figure}
+	   % \begin{figure}[t!]
+	   %     \includegraphics[width=250pt]{figures/number-of-forks-per-project}
+	   %     \caption{The number of forks per project}
+	   %     \label{fig:nr-forks-plot}
+	   % \end{figure}
 
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/number-of-pull-requests-per-project}
-	        \caption{The number of pull requests per project}
-	        \label{fig:nr-pull-requests-plot}
-	    \end{figure}
+	   % \begin{figure}[t!]
+	   %     \includegraphics[width=250pt]{figures/number-of-pull-requests-per-project}
+	   %     \caption{The number of pull requests per project}
+	   %     \label{fig:nr-pull-requests-plot}
+	   % \end{figure}
 
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/number-of-stars-per-project}
-	        \caption{The number of stars per project}
-	        \label{fig:nr-stars-plot}
-	    \end{figure}
-
-	    \begin{figure}[t!]
-	        \includegraphics[width=250pt]{figures/commits-per-day-per-project}
-	        \caption{The number of commits per day per project}
-	        \label{fig:nr-commits-day-plot}
-	    \end{figure}
+	   % \begin{figure}[t!]
+	   %     \includegraphics[width=250pt]{figures/commits-per-day-per-project}
+	   %     \caption{The number of commits per day per project}
+	   %     \label{fig:nr-commits-day-plot}
+	   % \end{figure}
 
 	    \begin{figure}[h!]
 	        \includegraphics[width=250pt]{figures/nr-commits-per-contributor}

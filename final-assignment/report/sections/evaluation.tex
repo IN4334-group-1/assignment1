@@ -1,10 +1,10 @@
 \section{Evaluation}
 To make sure the created dataset contains the data we expect, there have been numerous validations on it.
 Whenever the data of one of the features was retrieved, we manually checked some of the entries.
-This was done by picking a ten random samples from the data and looking them up on GitHub to see if the data we have found corresponds with the actual data.
+This was done by picking ten random samples from the data and looking them up on GitHub to see if the data we have found corresponds with the actual data.
 Another point that we checked on, were the outliers in the data.
 Whenever a feature contained entries that were much higher or lower than the other ones, we also manually checked them on GitHub to make sure the outliers are correct and not some anomalies in our data.
-Some examples of this included a wiki with a single contributor (a bot) and over 100,000 commits, read-only repositories without contributors and 
+Some examples of this included a wiki with a single contributor (a bot) and over 100,000 commits and read-only repositories without contributors. 
 
 \subsection{Threats to validity}
 When creating the dataset, some issues arose which will be further explained in this section.
@@ -16,7 +16,7 @@ Since this has been done manually, it can occur that not all projects are classi
 Some projects also span multiple domains and that makes it hard to categorize it correctly.
 Furthermore, the classification has been done only for the main categories.
 The projects could have been classified into subcategories, but with a sample size of two thousand projects this would then result in small samples for each of the domains.
-\todo{In order to minimize the influence of subjectiveness, projects where checked and classified by more than one person when it was not clear in which domain it should belong.} \\
+\todo{In order to minimize the influence of subjectiveness, projects where checked and classified by more than one person when it was not clear in which domain it should belong. IS THIS TRUE?} \\
 
 \subsubsection{Validations}
 The data in the GHTorrent dataset is not fully up to date with the latest changes on GitHub.
@@ -24,7 +24,8 @@ This made it harder to validate the data that we retrieved, as it differs from t
 An example of this would be the amount of stars a project has.
 If GHTorrent contains data that is a couple of weeks old, the project might have gained or lost some stars in the meantime.
 To be able to validate GHTorrent data even though it was not identical to the data currently on GitHub, we introduced a margin for the amounts that we can check.
-This means that if a project was listed as having a certain amount of commits in GHTorrent, it should at least have this amount of commits on GitHub \todo{as commits are very rarely deleted}. \\
+This means that if a certain user was listed to have $x$ followers in GHTorrent, the user should have a number of  followers in the range of $[x - 0.05 \times x , x + 0.05 \times x]$ on GitHub.
+\todo{This means that if a project was listed as having a certain amount of commits in GHTorrent, it should at least have this amount of commits on GitHub as commits are very rarely deleted: THIS CAN BE DELETED i GUESS, ADDED AN EXAMPLE WHICH IS PROBABLY A BIT CLEARER}. \\
 
 \subsubsection{GitHub limitations}
 A limitation on GitHub's side is that deletions are not contained in the events that GHTorrent uses.\cite{gousios-2013}

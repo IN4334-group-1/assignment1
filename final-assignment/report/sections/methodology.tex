@@ -32,6 +32,12 @@
         %        \item Discuss training/testing split
         %    \end{itemize}
         %}
+        
+    \begin{figure}[t!]
+        \includegraphics[width=250pt]{figures/number-of-stars-per-project}
+	    \caption{The number of stars per project}
+	    \label{fig:nr-stars-plot}
+	\end{figure}
     
     \subsection{Features}
     To be able to predict the amount of stars an OSS project will get, a model need to be designed.
@@ -157,22 +163,38 @@
     \subsection{Finding relations}
         Now that the features have been listed, we can try to infer relations between those features. More specifically, we have an independent variable - the amount of stars for a project - and we will try to find relations with the independent variables - the features listed in the previous section.
         
-        The machine learning algorithm that first comes to mind is linear regression. However, some of our features are categorical, e.g. the programming language of a project, which makes it impossible to use linear regression.
-        Luckily, there is a variant available which is able to handle categorical variables; this algorithm is called `multiple linear regression'. 
-        Initially, this algorithm will be used. Depending on the results, we will try out other algorithms like random forest and naive bayes.
+        %The machine learning algorithm that first comes to mind is linear regression. However, some of our features are categorical, e.g. the programming language of a project, which makes it impossible to use linear regression.
+        %Luckily, there is a variant available which is able to handle categorical variables; this algorithm is called `multiple linear regression'. 
+        %Initially, this algorithm will be used. Depending on the results, we will try out other algorithms like random forest and naive bayes.
         
-        On top of the initial analysis using multiple linear regression, an attempt will be made to finetune our model so that the prediction is as accurate as possible. The step-wise regression algorithm will be used for this task.
-    
+        %On top of the initial analysis using multiple linear regression, an attempt will be made to finetune our model so that the prediction is as accurate as possible. The step-wise regression algorithm will be used for this task.
+        On beforehand, we obviously do not know how and if the data is related. Luckily, there are many learning algorithms available which can be used. 
+        These algorithms take a model, which consists of a dependent variable and a list of features.
+        The learning algorithm than takes this model and a set of data and tries to find a useful relation between the dependent variable and the independent variables.
+        
+        To find the relation between the features and the dependent variable, we will execute the following procedure for each of the algorithms that will be tried.
+        \begin{itemize}
+            \item Execute 10 times:
+                \begin{itemize}
+                    \item Split the dataset in a training and a testing set, both consisting of half of the data.
+                    \item Train the model using the chosen learning algorithm and the training data.
+                    \item Use the model to predict the amount of stars for the entries in the testing set.
+                    \item Compare the predictions and the actual values, and calculate the $R^2$ value.
+                \end{itemize}
+            \item Compute the mean of all the $R^2$ values.
+        \end{itemize}
+        
+        After this procedure, we have a reasonable estimation of how well the learning algorithm handles our dataset.
        %\todo{
        %     \begin{itemize}
        %         \item Discuss machine learning algorithms (Multiple Linear Regression, Stepwise regression)
        %     \end{itemize}
        % }
 
-       \todo{
-        \begin{itemize}
-            \item Add machine learning algorithm info 
-            \item Add how we created the feature table etc.?
-            \item Add how we evaluate the machine learning algorithms (10 samples of our sample, calculate r-squared for each of them
-        \end{itemize}
-        }
+       %\todo{
+       % \begin{itemize}
+       %     \item Add machine learning algorithm info 
+       %     \item Add how we created the feature table etc.?
+       %     \item Add how we evaluate the machine learning algorithms (10 samples of our sample, calculate r-squared for each of them
+       % \end{itemize}
+       % }
