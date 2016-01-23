@@ -18,10 +18,19 @@
     As shown, there are a lot of reasons why it is useful to get your project starred on GitHub.
     However, this paper also aims at finding out which factors might have an influence on the starring-behaviour of users.
     In order to do that, a dataset is needed which contains information from GitHub.
-    There are at the time of writing two possible ways to get access to such a dataset: through the GitHubArchive project \cite{TODO} or GHTorrent project \cite{TODO}.
+    There are at the time of writing three possible ways to get access to such a dataset: through the GitHub API \cite{TODO}, GitHubArchive project \cite{TODO} or GHTorrent project \cite{TODO}.
+    The GitHub API can be queried for specific events.
+    However, the main downside is that only the last 90 days are included in the API.
+    The result of this is that important data might be missed, as it might not be possible to retrieve the needed data.
+    An example could be the amount of contributors, as this is determined based on whether a user has made a pull request to a specific project.
+    If it is only possible to go back in time for a very limited period, there is a great chance that some contributors will be missed.
+    Also, the timeframe is not the only limitiation, as there is a limit to 300 events in the API.
+    This means that data could go missing when querying the API at two different times, as the limit of 300 events dropped the entry while it is still less than 90 days old.
+
     GitHubArchive uses the GitHub API to monitor over 20 events \cite{TODO} that it provides. 
     They have been doing this since the beginning of 2011 \cite{TODO}, but their documentation is not the best.
     Because of that, it is not entirely clear what data there is ready to use and how it is related to each other.
+    
     GHTorrent on the other hand also contains GitHub data, but it only contains data from 2012 onwards \cite{TODO}.
     However, their documentation is much better and gives a clear overview of the available data and how it can be queried.
     Another advantage is the online MySQL environment \cite{TODO} that is available to query their database.
@@ -30,7 +39,7 @@
 
     %https://www.githubarchive.org
     %http://ghtorrent.org/
-    %https://developer.github.com/v3/activity/events/types/
+    %https://developer.github.com/v3/activity/events/
     %http://ghtorrent.org/dblite/
 
     Upon closer inspection of the GHTorrent dataset, it turns out that it also contains information that is not useful regarding the scope of this paper. 
