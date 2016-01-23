@@ -50,7 +50,6 @@
     	   \todo{ADD PLOT AND SHORT DESCRIPTION OF DOMAINS!}
     	\end{LaTeXdescription}
         
-        \todo{INSTEAD of all the pictures, add a table for all numerical values with min, max, mean, median, standard deviation}
 	    %\begin{figure}[t!]
 	    %    \includegraphics[width=250pt]{figures/average-number-of-followers-per-project-contributor}
 	    %    \caption{The average number of followers per project contributor}
@@ -129,10 +128,91 @@
 	        \label{fig:language-frequency-plot}
 	    \end{figure*}
     
+    \subsection{Relations}
+        \todo{Write something about correlations, add correlation plot. Add also the correlation between several features (followers etc.). Not that they were removed, that comes in the next section.}
+    
+    
     \subsection{Testing the model}
-        \todo{
-	    \begin{itemize}
-	        \item Add table with different RSquared values for complete dataset, scaled dataset, etc.
-	        \item Add table with different RSquared values for one domain.
-	    \end{itemize}
-	}
+        After sufficient insight in the features and the relations between the features was gained, a model was created. 
+        This model consists of the dependent variable, stars, and has almost all the features listed earlier as features. 
+        Based on the exploration, it was decided to drop three variables: the maximum number of followers per organization, the average number followers per contributor and the pull request acceptance ratio.
+        As stated earlier, the features concerning followers were closely related, so it was decided to keep half of them. 
+        The pull request acceptance ratio was dropped because of the many repositories that did not had any pull requests at all. 
+        This made a lot of entries in our feature table not usable, as it lacked information. 
+        To overcome this problem, the pull request acceptance ratio was removed from the model.
+        
+        Several algorithms have been used to train the model. 
+        The results can be found in table \ref{table:r-squared-table}.
+        All the algorithms were run on several versions of the dataset. The first version contained just the values that were retrieved from the GHTorrent dataset, and is indicated by `normal'. 
+        In the `scaled' version, all numerical features are scaled such that the mean is equal to zero and the standard deviation is equal to one. 
+        The last version is the `log-scaled' version. \todo{Each value in each numerical feature has been replaced by the value that was retrieved from taking the natural logarithm of each value; however, due to the fact that $log(0)$ is undefined and almost all numerical features contain zeroes, each value was first increased by 1. VERBETER DEZE ZIN :)}.
+        Each 'N/A' entry in the table means that the algorithm could not be run on that dataset, or that it did not yield useful result.
+        Two algorithms that have been tried are not shown in the table; both Multiple Linear Regression and General Linearized Model did not provide useful results on any of the versions of the datasets.
+        
+        \begin{center}
+        \begin{tabular}[width=250pt]{|l|c|c|c|}
+
+            \hline
+            Algorithm                   & normal    & scaled   & log-scaled \\ \hline
+            %Multiple Linear Regression  &    N/A    & N/A      & N/A                \\ 
+            PCR                         &   0.55    & 0.63     & 0.87          \\
+            PLSR                        &   0.52    & 0.47     & 0.86          \\
+            Stepwise Linear Regression  &   0.53    & 0.58     & 0.05         \\
+            %GLM                         &   N/A     & N/A      & N/A               \\
+            Neural Networks             &   N/A     &   0.24   & N/A               \\
+            Random Forest\footnotemark  &   0.57    & 0.58     & \textbf{0.88} \\
+            \hline
+        \end{tabular}
+        \captionof{table}{Mean r-squared values for several algorithms used on different versions of the dataset}
+        \label{table:r-squared-table}
+        \end{center}
+        \footnotetext{In order to make this algorithm work, the country of origin feature was removed, as the implementation that was used was not able to handle a categorical variable with such a large number of possible values.}
+        
+        
+        It is interesting to see that 3 out of 4 algorithms performed best on the `log-scaled' version of the dataset. A possible explanation is that most of the chosen algorithms may perform better when there are no negative values involved. The scaled version of the dataset does contain negative values, where the logarithmically scaled version does not, because each value was first increased by one.
+        
+        The best $R^2$ was achieved by the Random Forest algorithm on the logarithmically scaled dataset, with $R^2 = 0.88$. This means that 88\% of all the variance between the predictions made by the model and the actual dataset can be explained, and is due to variance in the dataset itself; the other 12\% cannot be explained and is caused by the fact that the model is not perfect and cannot match the reality exactly.
+        \todo{EXPLAIN WHY RANDOMFOREST WORKS WELL: because of majority votes. ADD REFERENCE TO RANDOMFOREST THING}
+                
+        It was also tried to extract all the items with a certain domain, e.g. `Networks' and run the various algorithm on a dataset containing just objects with just that domain. However, this did not yield any valuable results. 
+        The best $R^2$ value for those tests was 0.39, which means that still 61\% of the variance between the model and the actual data could not be explained.
+        
+    \subsection{Important features}
+        As is clear from the results shown earlier, it is possible to predict the number of stars of a project relatively accurately. 
+        The follow-up question is: which features from the dataset are most important in this prediction? 
+        Table \ref{table:inc-mse-feature-removal} shows the increase in the Mean Squared Error when a certain feature is removed from the model.
+        \begin{center}
+        \begin{tabular}[width=250pt]{|l|c|}
+            \hline
+            Feature                                                       & MSE increase (\%) \\
+            \hline
+                Number of forks                                            & 53.9     \\
+                Average number of followers per organization member         & 26.6    \\
+                Number of pull requests                                    & 25.2     \\
+                Average number of commits per day                          & 19.3     \\
+                Maximum number of followers of contributor                 & 18.9                   \\                    
+                Number of contributors                                     & 16.5      \\
+                Project age                                                &  16.3  \\
+                Project is a fork                                          & 13.0      \\
+                Language                                                   & 12.1      \\
+                Average number of commits per developer                    & 11.4         \\
+                Project has a description                                  & 8.0 \\
+                Domain                                                     & 5.3 \\
+                Number of members of organization                          & 4.3 \\
+            \hline
+        \end{tabular}
+        \captionof{table}{Increase in MSE when a feature is removed}
+        \label{table:inc-mse-feature-removal}
+     \end{center}
+     
+     It is clear that the number of forks is very useful, as well as the average number of followers per organization member and the number of pull requests; this also is in agreement with the correlations shown earlier, as these features were relatively strong\todo{ly?} correlated with the number of stars. Both features concerning followers are also quite influential. 
+     The average number of commits per day, which resembles the `activity' of the developers, is also a useful feature.
+     The lack of usefulness of certain features is a bit unexpected. The biggest revelation is that the domain actually does not influence the prediction very much. The size of the organization that owns a repository is also not very influential.
+     
+     A possible explanation for the importance of the number of forks is that when users fork a repository, they are also likely to give it a star. 
+     The goal of forking a repository is to actually make edits to a repository; it shows a certain emotional attachment, the developer in dispute is committing his/her time to improving the project. 
+     When someone is willing to do that, it is likely that they also appreciate the project: why else would they spend their time improving it? The same reasoning can be given for the importance of the number of pull requests.
+     The number of followers is also relatively important; users with a lot of followers attract their followers to be involved in new projects \cite{blincoe-2015}, which might then gain more and attention and as a side-effect, more stars.
+     
+     The unimportance of domains could be an indication that the classification that was done by hand was not done very well; another explanation could be that the classification should be more `fine-grained'. 
+     Currently, only the top-level domains from the ACM classification system are used. It is possible that the domain feature is more useful when more specific domains were used.
