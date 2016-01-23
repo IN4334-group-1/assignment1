@@ -47,7 +47,9 @@
     	When dividing the amount of commits by the amount of developers, this result in a division by 0 which was represented as infinity.
     	These values were not added in the plot. 
     	\item[Domains]
-    	   \todo{ADD PLOT AND SHORT DESCRIPTION OF DOMAINS!}
+    	Figure \ref{fig:project-domain-plot} shows the domains and the amount of projects that were classified into that domain.
+    	This classification was done manually and is based on the top level domains of the 2012 ACM classification \cite{acm-2012}.
+    	In addition, two other domains were added - \textit{empty} and \textit{not found} - which respectively indicate that a certain project did not contain any files and that a project could not be found anymore on GitHub.
     	\end{LaTeXdescription}
         
 	    %\begin{figure}[t!]
@@ -117,6 +119,12 @@
 	    \end{figure}
 
 	    \begin{figure*}[t!]
+	        \includegraphics[width=500pt]{figures/project-domains}
+	        \caption{An overview of the amount of projects per domain}
+	        \label{fig:project-domain-plot}
+	    \end{figure*}
+
+	    \begin{figure*}[t!]
 	        \includegraphics[width=500pt]{figures/country-per-project}
 	        \caption{An overview of the countries where the project was created}
 	        \label{fig:country-plot}
@@ -129,13 +137,25 @@
 	    \end{figure*}
     
     \subsection{Relations}
-        \todo{Write something about correlations, add correlation plot. Add also the correlation between several features (followers etc.). Not that they were removed, that comes in the next section.}
-    
-    
+    Better understanding of the different features was achieved by plotting the correlations.
+    The result of using spearman's rank correlation coefficient \todo{reference} on the sampled data can be found in Figure \ref{fig:correlation-plot}.
+    When examining the created plot, there were some interesting relations found.
+    The first one was the negative correlation between the age of a project and its id.
+    This was not very surprising, as the ids of the older projects are lower as these were added to the GHTorrent dataset first.
+    Another notable thing is that the average followers per organization and maximum followers per organization - and the same applies to average followers and maximum followers of contributors - were strongly correlated. 
+    Lastly the number of pull request seems to be strongly correlated to the amount of contributors.
+    Again this is not surprising, as a contributor is someone that contributed to the project. 
+    Since this can only be done by using a pull request, if you are not one of the core developers, the amount of pull requests is influenced by the amount of people that have contributed to a project.
+    \begin{figure}[h!]
+	    \includegraphics[width=250pt]{figures/correlation}
+	    \caption{Correlation between the different features}
+        \label{fig:correlation-plot}
+	\end{figure}
+
     \subsection{Testing the model}
         After sufficient insight in the features and the relations between the features was gained, a model was created. 
         This model consists of the dependent variable, stars, and has almost all the features listed earlier as features. 
-        Based on the exploration, it was decided to drop three variables: the maximum number of followers per organization, the average number followers per contributor and the pull request acceptance ratio.
+        Based on the exploration, it was decided to drop three variables: the maximum number of followers per organization, the average number of followers per contributor and the pull request acceptance ratio.
         As stated earlier, the features concerning followers were closely related, so it was decided to keep half of them. 
         The pull request acceptance ratio was dropped because of the many repositories that did not had any pull requests at all. 
         This made a lot of entries in our feature table not usable, as it lacked information. 
@@ -146,7 +166,7 @@
         All the algorithms were run on several versions of the dataset. The first version contained just the values that were retrieved from the GHTorrent dataset, and is indicated by `normal'. 
         In the `scaled' version, all numerical features are scaled such that the mean is equal to zero and the standard deviation is equal to one. 
         The last version is the `log-scaled' version. \todo{Each value in each numerical feature has been replaced by the value that was retrieved from taking the natural logarithm of each value; however, due to the fact that $log(0)$ is undefined and almost all numerical features contain zeroes, each value was first increased by 1. VERBETER DEZE ZIN :)}.
-        Each 'N/A' entry in the table means that the algorithm could not be run on that dataset, or that it did not yield useful result.
+        Each `N/A' entry in the table means that the algorithm could not be run on that dataset, or that it did not yield useful result.
         Two algorithms that have been tried are not shown in the table; both Multiple Linear Regression and General Linearized Model did not provide useful results on any of the versions of the datasets.
         
         \begin{center}
@@ -182,17 +202,17 @@
         The follow-up question is: which features from the dataset are most important in this prediction? 
         Table \ref{table:inc-mse-feature-removal} shows the increase in the Mean Squared Error when a certain feature is removed from the model.
         \begin{center}
-        \begin{tabular}[width=250pt]{|l|c|}
+        \begin{tabular}[width=250pt]{|p{5cm}|c|}
             \hline
             Feature                                                       & MSE increase (\%) \\
             \hline
                 Number of forks                                            & 53.9     \\
-                Average number of followers per organization member         & 26.6    \\
+                Average number of followers per organization member        & 26.6    \\
                 Number of pull requests                                    & 25.2     \\
                 Average number of commits per day                          & 19.3     \\
-                Maximum number of followers of contributor                 & 18.9                   \\                    
+                Maximum number of followers per contributor                & 18.9                   \\                    
                 Number of contributors                                     & 16.5      \\
-                Project age                                                &  16.3  \\
+                Project age                                                & 16.3  \\
                 Project is a fork                                          & 13.0      \\
                 Language                                                   & 12.1      \\
                 Average number of commits per developer                    & 11.4         \\
