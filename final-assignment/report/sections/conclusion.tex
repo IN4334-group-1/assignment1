@@ -2,15 +2,15 @@
 	In this paper, a brand new dataset and models were presented to predict the number of stars for open source software projects on GitHub.
 	The dataset consists of several features that were modeled with different algorithms, including PCR, PLSR, Stepwise linear regression, Neural Networks and Random Forest.
 	The models were trained on half of the dataset and were tested on the remaining half for correctness.
-	\todo{iets over normal / scaled / log-scaled}
-	Experiments showed that the different models had varying results, ranging from an $R^2$ value of 0.05 for stepwise linear regression to a value of 0.87 for PCR and 0.88 for random forest.
-	\todo{models show potential, shows that prediction can be accurate and values are close to actual values? etc.....} 
-	\todo{
-	    \begin{itemize}
-	        \item A brand new dataset with all kinds of nice features, freely available for everyone (ADD URL!)
-	        \item The amount of stars can be predicted upto a certain extent. 
-	        \item The main features used for this is the number of forks, the number of pull requests and the number of followers.
-	    \end{itemize}
-	}
-	The provided dataset has a strong potential for providing further interesting insights into \todo{blabla}
-	The dataset itself can be obtained at https://github.com/IN4334-group-1/msr .
+	Since the data was very skewed, the models were applied to the normal dataset, a scaled one and a log-scaled version.
+	Experiments showed that the different models had varying results, ranging from an $R^2$ value of 0.05 for stepwise linear regression to a value of 0.87 for PCR and 0.88 for random forest on a log-scaled version of the dataset.
+	This indicates that the amount of stars for a project can be predicted reasonably accurate with the models that were proposed in this paper.
+	Further experiments showed that the number of forks, the number of followers and the number of pull requests were the main features that influenced the error in the prediction.
+	%\todo{
+	%   \begin{itemize}
+	%        \item A brand new dataset with all kinds of nice features, freely available for everyone (ADD URL!)
+	%        \item The amount of stars can be predicted upto a certain extent. 
+	%        \item The main features used for this is the number of forks, the number of pull requests and the number of followers.
+	%    \end{itemize}
+	%}
+	The provided dataset has a strong potential for providing further interesting insights into characterstics of a GitHub project and can be obtained at \url{https://github.com/IN4334-group-1/msr}.

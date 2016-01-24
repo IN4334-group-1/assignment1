@@ -18,7 +18,7 @@
     As shown, there are a lot of reasons why it is useful to get your project starred on GitHub.
     However, this paper also aims at finding out which factors might have an influence on the starring-behaviour of users.
     In order to do that, a dataset is needed which contains information from GitHub.
-    There are at the time of writing three possible ways to get access to such a dataset: through the GitHub API \cite{TODO}, GitHubArchive project \cite{TODO} or GHTorrent project \cite{TODO}.
+    There are at the time of writing three possible ways to get access to such a dataset: through the GitHub API \cite{github-api-2016}, GitHubArchive project \cite{githubarchive-2016} or GHTorrent project \cite{ghtorrent-2016}.
     The GitHub API can be queried for specific events.
     However, the main downside is that only the last 90 days are included in the API.
     The result of this is that important data might be missed, as it might not be possible to retrieve the needed data.
@@ -27,13 +27,13 @@
     Also, the timeframe is not the only limitiation, as there is a limit to 300 events in the API.
     This means that data could go missing when querying the API at two different times, as the limit of 300 events dropped the entry while it is still less than 90 days old.
 
-    GitHubArchive uses the GitHub API to monitor over 20 events \cite{TODO} that it provides. 
-    They have been doing this since the beginning of 2011 \cite{TODO}, but their documentation is not the best.
+    GitHubArchive uses the GitHub API to monitor over 20 events \cite{github-events-2016} that it provides. 
+    They have been doing this since the beginning of 2011, but their documentation is lacking a lot of information.
     Because of that, it is not entirely clear what data there is ready to use and how it is related to each other.
     
-    GHTorrent on the other hand also contains GitHub data, but it only contains data from 2012 onwards \cite{TODO}.
+    GHTorrent on the other hand also contains GitHub data, but it only contains data from 2012 onwards.
     However, their documentation is much better and gives a clear overview of the available data and how it can be queried.
-    Another advantage is the online MySQL environment \cite{TODO} that is available to query their database.
+    Another advantage is the online MySQL environment \cite{ghtorrent-dblit-2016} that is available to query their database.
     The GHTorrent dataset is very large, which makes it useful to create a random sample from.
     \todo{proberen iets te zeggen over dat de dataset erg groot is, waarom dat handig is en waarom wij er een sample van pakken. Dit dus ook blend-in met de rest van de tekst zien te krijgen ;p}
 
@@ -47,8 +47,8 @@
     Example of this are the repository milestones and issue tracking event.
     Because the paper does not include these events as features, it is not useful to include them in the dataset on which the calculations will be done. 
     Therefore a new dataset is created which only includes the useable events. 
-    The data that is included in the new dataset is more extensively explained in Section \ref{TODO}, where also the features are explained.
-    The dataset contains two thousand projects and can be found on \todo{(not yet)} https://github.com/IN4334-group-1/msr.
+    The data that is included in the new dataset is more extensively explained in Section \ref{sec:methodology}, where also the features are explained.
+    The dataset contains two thousand projects and can be found on \url{https://github.com/IN4334-group-1/msr}.
 
     With the use of the new dataset, the following question will be answered in this paper: `Can we predict the amount of stars a project on GitHub will get by looking at its characteristics?'
     This high-level question can be split up into two more concrete questions:
