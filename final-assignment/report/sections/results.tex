@@ -165,7 +165,9 @@
         The results can be found in table \ref{table:r-squared-table}.
         All the algorithms were run on several versions of the dataset. The first version contained just the values that were retrieved from the GHTorrent dataset, and is indicated by `normal'. 
         In the `scaled' version, all numerical features are scaled such that the mean is equal to zero and the standard deviation is equal to one. 
-        The last version is the `log-scaled' version. \todo{Each value in each numerical feature has been replaced by the value that was retrieved from taking the natural logarithm of each value; however, due to the fact that $log(0)$ is undefined and almost all numerical features contain zeroes, each value was first increased by 1. VERBETER DEZE ZIN :)}.
+        The last version is the `log-scaled' version. 
+        Again each of the numerical features was replaced, but this time by a value that was retrieved from taking the natural logarithm of each value.
+        However, due to the fact that $log(0)$ is undefined and almost all of the numerical features contained entries with zeroes, all of the values were first increased by 1.
         Each `N/A' entry in the table means that the algorithm could not be run on that dataset, or that it did not yield useful result.
         Two algorithms that have been tried are not shown in the table; both Multiple Linear Regression and General Linearized Model did not provide useful results on any of the versions of the datasets.
         
@@ -192,9 +194,12 @@
         It is interesting to see that 3 out of 4 algorithms performed best on the `log-scaled' version of the dataset. A possible explanation is that most of the chosen algorithms may perform better when there are no negative values involved. The scaled version of the dataset does contain negative values, where the logarithmically scaled version does not, because each value was first increased by one.
         
         The best $R^2$ was achieved by the Random Forest algorithm on the logarithmically scaled dataset, with $R^2 = 0.88$. This means that 88\% of all the variance between the predictions made by the model and the actual dataset can be explained, and is due to variance in the dataset itself; the other 12\% cannot be explained and is caused by the fact that the model is not perfect and cannot match the reality exactly.
-        \todo{EXPLAIN WHY RANDOMFOREST WORKS WELL: because of majority votes. ADD REFERENCE TO RANDOMFOREST THING}
+        The reason that Random Forest \cite{breiman-2001} works well with the data, is because of majority voting and feature bagging.
+        The algorithm creates multiple classifications trees based on random subsets of the features and each of these trees counts as a `vote'.
+        In the end, the votes are counted to make a final classification.
+        Since the dataset contains features that are more heavily correlated with the amount of stars, the combination of majority voting and featuring bagging extracts the important features to create an accurate prediction.
                 
-        It was also tried to extract all the items with a certain domain, e.g. `Networks' and run the various algorithm on a dataset containing just objects with just that domain. However, this did not yield any valuable results. 
+        It was also tried to extract all the items with a certain domain, e.g. `Networks' and run the various algorithms on a dataset containing just objects with just that domain. However, this did not yield any valuable results. 
         The best $R^2$ value for those tests was 0.39, which means that still 61\% of the variance between the model and the actual data could not be explained.
         
     \subsection{Important features}

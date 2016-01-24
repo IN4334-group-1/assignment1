@@ -34,8 +34,7 @@
     GHTorrent on the other hand also contains GitHub data, but it only contains data from 2012 onwards.
     However, their documentation is much better and gives a clear overview of the available data and how it can be queried.
     Another advantage is the online MySQL environment \cite{ghtorrent-dblit-2016} that is available to query their database.
-    The GHTorrent dataset is very large, which makes it useful to create a random sample from.
-    \todo{proberen iets te zeggen over dat de dataset erg groot is, waarom dat handig is en waarom wij er een sample van pakken. Dit dus ook blend-in met de rest van de tekst zien te krijgen ;p}
+    The GHTorrent dataset is very large, which makes it a good representation of how GitHub is used in reality and is therefore a good source to sample from.
 
 
     %https://www.githubarchive.org
@@ -44,11 +43,11 @@
     %http://ghtorrent.org/dblite/
 
     Upon closer inspection of the GHTorrent dataset, it turns out that it also contains information that is not useful regarding the scope of this paper. 
-    Example of this are the repository milestones and issue tracking event.
-    Because the paper does not include these events as features, it is not useful to include them in the dataset on which the calculations will be done. 
+    Example of this are the repository milestones and issue tracking events.
+    Because this research does not include these events as features, it is not useful to include them in the dataset on which the calculations will be done. 
     Therefore a new dataset is created which only includes the useable events. 
     The data that is included in the new dataset is more extensively explained in Section \ref{sec:methodology}, where also the features are explained.
-    The dataset contains two thousand projects and can be found on \url{https://github.com/IN4334-group-1/msr}.
+    The dataset contains two thousand projects and can be found at \url{https://github.com/IN4334-group-1/msr}.
 
     With the use of the new dataset, the following question will be answered in this paper: `Can we predict the amount of stars a project on GitHub will get by looking at its characteristics?'
     This high-level question can be split up into two more concrete questions:
